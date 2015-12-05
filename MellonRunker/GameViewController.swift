@@ -24,6 +24,7 @@ class GameViewController: UIViewController {
             skView.ignoresSiblingOrder = true
             
             let scene = GameScene(size: self.view.bounds.size)
+            scene.scaleMode = .AspectFill
             
             skView.presentScene(scene)
         }

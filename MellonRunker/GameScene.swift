@@ -52,7 +52,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.livesLabel = SKLabelNode(fontNamed: "HelveticaNeue-Light")
         
         super.init(size: size)
-        self.backgroundColor = SKColor.blackColor()
+        
+        // Set background
+        self.backgroundColor = SKColor.greenColor()
+        let backgroundImage = SKSpriteNode(imageNamed: "Background")
+        backgroundImage.position = CGPointMake(self.frame.midX, self.frame.midY)
+        self.addChild(backgroundImage)
+        
         self.physicsWorld.gravity = CGVectorMake(0,0)
         self.physicsWorld.contactDelegate = self    // whenever two things contact each other, myself controls it.
         
