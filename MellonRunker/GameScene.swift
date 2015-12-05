@@ -46,7 +46,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.numberOfLives = 3
         self.isSetup = false
         self.ballIsMoving = false
-        self.ball = SKSpriteNode(imageNamed: "ball")
+        self.spaceship = SKSpriteNode(imageNamed: "ball")
         self.paddle = SKSpriteNode(imageNamed:"paddle")
         self.scoreLabel = SKLabelNode(fontNamed: "HelveticaNeue-Light")
         self.livesLabel = SKLabelNode(fontNamed: "HelveticaNeue-Light")
@@ -58,7 +58,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         
         
         //initialize the spaceship
-        self.spaceship.physicsBody = SKPhysicsBody(circleOfRadius: self.ball.size.width / 2.0)  // ball is an image
+        self.spaceship.physicsBody = SKPhysicsBody(circleOfRadius: self.spaceship.size.width / 2.0)  // ball is an image
         
         self.spaceship.physicsBody?.categoryBitMask = spaceshipCategory
         self.spaceship.physicsBody?.contactTestBitMask = rockCategory
@@ -195,7 +195,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.movePaddleToPoint(location)    // call movePaddleToPoint method
         
         if (!self.ballIsMoving) {
-            self.ball.physicsBody?.applyImpulse(CGVectorMake(randomXOffset, -2))
+            self.spaceship.physicsBody?.applyImpulse(CGVectorMake(randomXOffset, -2))
             self.ballIsMoving = true
         }
     }
@@ -212,10 +212,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     }
     
     override func update(currentTime: CFTimeInterval) { // check if the player lost the game
-        if (self.ball.position.y < 0) {
+        if (self.spaceship.position.y < 0) {
             // reset ball
-            self.ball.physicsBody?.velocity = CGVectorMake(0,0)
-            self.ball.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame))
+            self.spaceship.physicsBody?.velocity = CGVectorMake(0,0)
+            self.spaceship.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame))
             self.ballIsMoving = false
             
             // reset paddle position
@@ -244,10 +244,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         
         // if ball and paddle collided
         if (firstBody.categoryBitMask & paddleCategory != 0 && secondBody.categoryBitMask & ballCategory != 0) {
-            let ballVector = self.ball.physicsBody!.velocity
+            let ballVector = self.spaceship.physicsBody!.velocity
             let normalPoint = vecNormalize(CGPointMake(ballVector.dx,ballVector.dy))
             let scaledPoint = vecMult(normalPoint, b: 0.04) // impulse we want to apply
-            self.ball.physicsBody?.applyImpulse(CGVectorMake(scaledPoint.x,scaledPoint.y))
+            self.spaceship.physicsBody?.applyImpulse(CGVectorMake(scaledPoint.x,scaledPoint.y))
         }
     }
     
