@@ -15,6 +15,7 @@
 		42F9C9AE1BFAA13D00856906 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42F9C9AC1BFAA13D00856906 /* LaunchScreen.storyboard */; };
 		42F9C9B61C03DA4B00856906 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F9C9B51C03DA4B00856906 /* GameScene.swift */; };
 		42F9C9B81C03DAF400856906 /* SpriteCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F9C9B71C03DAF400856906 /* SpriteCategories.swift */; };
+		CE75FB111C1283B400FF6613 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE75FB101C1283B400FF6613 /* SplashViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		42F9C9AF1BFAA13D00856906 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		42F9C9B51C03DA4B00856906 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		42F9C9B71C03DAF400856906 /* SpriteCategories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpriteCategories.swift; sourceTree = "<group>"; };
+		CE75FB101C1283B400FF6613 /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				42F9C9A11BFAA13D00856906 /* AppDelegate.swift */,
 				42F9C9A31BFAA13D00856906 /* art.scnassets */,
 				42F9C9A51BFAA13D00856906 /* GameViewController.swift */,
+				CE75FB101C1283B400FF6613 /* SplashViewController.swift */,
 				42F9C9B51C03DA4B00856906 /* GameScene.swift */,
 				42F9C9B71C03DAF400856906 /* SpriteCategories.swift */,
 				42F9C9A71BFAA13D00856906 /* Main.storyboard */,
@@ -149,6 +152,7 @@
 				42F9C9A61BFAA13D00856906 /* GameViewController.swift in Sources */,
 				42F9C9B81C03DAF400856906 /* SpriteCategories.swift in Sources */,
 				42F9C9A21BFAA13D00856906 /* AppDelegate.swift in Sources */,
+				CE75FB111C1283B400FF6613 /* SplashViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
