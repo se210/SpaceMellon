@@ -57,6 +57,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.backgroundColor = SKColor.greenColor()
         let backgroundImage = SKSpriteNode(imageNamed: "Background")
         backgroundImage.position = CGPointMake(self.frame.midX, self.frame.midY)
+        backgroundImage.zPosition = -5.0
         self.addChild(backgroundImage)
         
         self.physicsWorld.gravity = CGVectorMake(0,0)
