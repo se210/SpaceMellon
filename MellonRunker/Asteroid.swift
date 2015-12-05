@@ -23,24 +23,39 @@ class Asteroid
         asteroid = SKSpriteNode(imageNamed: asteroidName)
         
         // get random starting position within boundary
-        var x = CGFloat(UniformRandomDistribution.sample(50.0, max: 200.0))
-        var xpos: CGFloat = parentFrame.maxX + x
-        if (UniformRandomDistribution.sample(-1.0, max: 1.0) < 0.0)
+        // side - 0: top, 1: right, 2: bottom, 3: left
+        let side = arc4random_uniform(4)
+        var xpos: CGFloat
+        var ypos: CGFloat
+        if (side % 2 == 0)
         {
-            x = -x
-            xpos = x
+            xpos = CGFloat(UniformRandomDistribution.sample(Double(parentFrame.minX),
+                                                            max: Double(parentFrame.maxX)))
+            if (side == 0)
+            {
+                ypos = parentFrame.maxY + 100.0
+            }
+            else
+            {
+                ypos = parentFrame.minY - 100.0
+            }
         }
-        
-        var y = CGFloat(UniformRandomDistribution.sample(50.0, max: 200.0))
-        var ypos: CGFloat = parentFrame.maxY + y
-        if (UniformRandomDistribution.sample(-1.0, max: 1.0) < 0.0)
+        else
         {
-            y = -y
-            ypos = y
+            ypos = CGFloat(UniformRandomDistribution.sample(Double(parentFrame.minY),
+                max: Double(parentFrame.maxY)))
+            if (side == 1)
+            {
+                xpos = parentFrame.maxX + 100.0
+            }
+            else
+            {
+                xpos = parentFrame.minX - 100.0
+            }
+
         }
         
         asteroid.position = CGPoint(x: xpos, y: ypos)
-//        asteroid.position = CGPoint(x: parentFrame.midX, y: parentFrame.midY)
         
         // asteroid physics
         asteroid.physicsBody = SKPhysicsBody(texture: asteroid.texture!, size: asteroid.size)
@@ -49,20 +64,21 @@ class Asteroid
         asteroid.physicsBody?.collisionBitMask = spaceshipCategory
         asteroid.physicsBody?.affectedByGravity = false
         asteroid.physicsBody?.dynamic = true
+        asteroid.physicsBody?.restitution = 1.0
         
         // get random velocity
         let meanSpeed = 100.0
-        let stdevSpeed = 100.0
-        var xspeed = GaussianRandomDistribution.sample(meanSpeed, stdev: stdevSpeed)
-        if (x < 0)
+        let stdevSpeed = 30.0
+        var xspeed = abs(GaussianRandomDistribution.sample(meanSpeed, stdev: stdevSpeed))
+        if (side == 1)
         {
-            xspeed = abs(xspeed)
+            xspeed = -xspeed
         }
         
-        var yspeed = GaussianRandomDistribution.sample(meanSpeed, stdev: stdevSpeed)
-        if (y < 0)
+        var yspeed = abs(GaussianRandomDistribution.sample(meanSpeed, stdev: stdevSpeed))
+        if (side == 0)
         {
-            yspeed = abs(yspeed)
+            yspeed = -yspeed
         }
         
         asteroid.physicsBody?.velocity = CGVector(dx: xspeed, dy: yspeed)
