@@ -222,7 +222,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         } else {
             self.spaceship.zRotation = CGFloat(M_PI) + atan(-point.x/point.y)
         }
-        self.spaceship.physicsBody?.velocity = CGVectorMake(point.x, point.y)
+        let velocityScale: CGFloat = 2.0
+        self.spaceship.physicsBody?.velocity = CGVectorMake(point.x * velocityScale, point.y * velocityScale)
     }
     
     override func update(currentTime: CFTimeInterval) {
