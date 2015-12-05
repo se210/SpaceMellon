@@ -9,8 +9,11 @@
 import Foundation
 
 // constants for the physics body bit masks used in contact/collision detection
-let rockCategory: UInt32  = 0x1 << 0
+let astroidCategory: UInt32  = 0x1 << 0
 let spaceshipCategory: UInt32 = 0x1 << 1
 let paddleCategory: UInt32 = 0x1 << 2
 let ballCategory: UInt32 = 0x1 << 3
 let blockCategory: UInt32 = 0x1 << 4
+/*let paddleCategory: UInt32 = 0x1 << 2
+let sheepCategory: UInt32 = 0x1 << 3
+let wolfCategory: UInt32 = 0x1 << 4*/

@@ -12,6 +12,7 @@ import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate{
     var spaceship: SKSpriteNode
+    var astroid: SKSpriteNode
     
     var paddle: SKSpriteNode
     var isSetup: Bool
@@ -20,6 +21,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     var score: Int
     var scoreLabel: SKLabelNode
     var livesLabel: SKLabelNode
+    
+    var controlpad: SKSpriteNode
+    var controller: SKSpriteNode
+    
     let kScoreHeight: CGFloat = 44.0
     
     func vecMult(a: CGPoint, b: Float) -> CGPoint {
@@ -48,8 +53,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.ballIsMoving = false
         self.spaceship = SKSpriteNode(imageNamed: "ball")
         self.paddle = SKSpriteNode(imageNamed:"paddle")
+        self.spaceship = SKSpriteNode(imageNamed: "spaceship")
+        self.astroid = SKSpriteNode(imageNamed: "astroid")
         self.scoreLabel = SKLabelNode(fontNamed: "HelveticaNeue-Light")
         self.livesLabel = SKLabelNode(fontNamed: "HelveticaNeue-Light")
+        self.controller = SKSpriteNode(imageNamed: "controller_dark")
+        self.controlpad = SKSpriteNode(imageNamed: "controlpad_light")
         
         super.init(size: size)
         
@@ -65,35 +74,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         
         
         //initialize the spaceship
-        self.spaceship.physicsBody = SKPhysicsBody(circleOfRadius: self.spaceship.size.width / 2.0)  // ball is an image
+        self.spaceship.physicsBody = SKPhysicsBody(circleOfRadius: self.spaceship.size.width / 2.0)
         
         self.spaceship.physicsBody?.categoryBitMask = spaceshipCategory
-        self.spaceship.physicsBody?.contactTestBitMask = rockCategory
+        self.spaceship.physicsBody?.contactTestBitMask = astroidCategory
         self.spaceship.physicsBody?.affectedByGravity = false
         self.spaceship.physicsBody?.dynamic = false
         
         self.physicsBody?.usesPreciseCollisionDetection = true
         
-        self.spaceship.position = CGRectGetCenter(self.frame)
-        
-        self.spaceship.physicsBody?.friction = 0.0
+        var centerPoint = CGRectGetCenter(self.frame)
+        centerPoint.y = self.spaceship.size.height / 2.0
+        self.spaceship.position = centerPoint
         
         self.addChild(self.spaceship)
         
-        // initialize the paddle
-        self.paddle.physicsBody = SKPhysicsBody(rectangleOfSize: self.paddle.size)
+        self.controller.alpha = 0.6
+        self.controlpad.alpha = 1
+        self.controller.zPosition = -3.0
+        self.controlpad.zPosition = -4.0
+        self.controller.hidden = true
+        self.controlpad.hidden = true
+        self.addChild(self.controller)
+        self.addChild(self.controlpad)
         
-        self.paddle.physicsBody?.categoryBitMask = paddleCategory
-        self.paddle.physicsBody?.contactTestBitMask = ballCategory
-        self.paddle.physicsBody?.affectedByGravity = false
-        self.paddle.physicsBody?.dynamic = false    // paddle is not moved by physics simulation
-        
-        var centerPoint = CGRectGetCenter(self.frame)
-        centerPoint.y = self.paddle.size.height / 2.0
-        self.paddle.position = centerPoint
-        
-        self.addChild(self.paddle)
-        
+        /*
         // initialize the walls and ceiling
         let screenRect = self.frame
         let wallSize = CGSizeMake(1,CGRectGetHeight(screenRect))
@@ -117,10 +122,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.addChild(leftBoundary)
         self.addChild(rightBoundary)
         self.addChild(ceilingBoundary)
+        */
     }
     
     override func didMoveToView(view: SKView) {
         if (!isSetup) { // when the game is not setup
+            self.generateAstroids()
             self.setupSceneWithBlocks()
             self.setupScoreDisplay()
             self.isSetup = true
@@ -144,6 +151,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.livesLabel.position = CGPointMake(CGRectGetMaxX(self.frame) - self.livesLabel.frame.size.width / 2.0 - 5,
             CGRectGetMaxY(self.frame) - self.livesLabel.frame.size.height)
         self.addChild(self.livesLabel)
+    }
+    
+    // generate
+    func generateAstroids() {
+        // TODO
     }
     
     // Setup the blocks for the game
@@ -205,12 +217,39 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             self.spaceship.physicsBody?.applyImpulse(CGVectorMake(randomXOffset, -2))
             self.ballIsMoving = true
         }
+        
+        // move controller and controlpad at location and reveal
+        self.controlpad.position = location
+        self.controller.position = location
+        self.controlpad.hidden = false
+        self.controller.hidden = false
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         let touch = touches.first! as UITouch
         let location = touch.locationInNode(self)
-        self.movePaddleToPoint(location)
+        let padradius = self.controlpad.frame.width / 3.0
+        let padlocation = self.controlpad.position
+        let difference = CGPointMake(location.x - padlocation.x, location.y - padlocation.y)
+        
+        // move controller on controlpad according to its direction
+        if (vecLength(difference) > Float(padradius)) {
+            self.controller.position = CGPointMake(padlocation.x + padradius * vecNormalize(difference).x,
+                                                   padlocation.y + padradius * vecNormalize(difference).y)
+        } else {
+            self.controller.position = location
+        }
+        self.moveShipByVector(difference)
+    }
+    
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        // hide controller and controlpad
+        self.controlpad.hidden = true
+        self.controller.hidden = true
+    }
+    
+    func moveShipByVector(point: CGPoint) {
+        
     }
     
     func movePaddleToPoint(point: CGPoint) {
