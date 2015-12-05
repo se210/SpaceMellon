@@ -19,9 +19,11 @@ class Asteroid : SKSpriteNode
     {
         let randomIdx = Int(arc4random_uniform(UInt32(asteroidNames.count)))
         let asteroidName = asteroidNames[randomIdx]
+        let scaleFactor: CGFloat = 0.7
         
         let asteroidTexture = SKTexture(imageNamed: asteroidName)
-        super.init(texture: asteroidTexture, color: UIColor.whiteColor(), size: asteroidTexture.size())
+        let asteroidSize = CGSizeMake(asteroidTexture.size().width * scaleFactor, asteroidTexture.size().height * scaleFactor)
+        super.init(texture: asteroidTexture, color: UIColor.whiteColor(), size: asteroidSize)
         
         // get random starting position within boundary
         // side - 0: top, 1: right, 2: bottom, 3: left
@@ -59,7 +61,7 @@ class Asteroid : SKSpriteNode
         self.position = CGPoint(x: xpos, y: ypos)
         
         // asteroid physics
-        self.physicsBody = SKPhysicsBody(texture: asteroidTexture, size: asteroidTexture.size())
+        self.physicsBody = SKPhysicsBody(texture: asteroidTexture, size: asteroidSize)
         self.physicsBody?.categoryBitMask = asteroidCategory
         self.physicsBody?.contactTestBitMask = spaceshipCategory|farBoundaryCategory
         self.physicsBody?.collisionBitMask = spaceshipCategory
@@ -68,8 +70,8 @@ class Asteroid : SKSpriteNode
         self.physicsBody?.restitution = 1.0
         
         // get random velocity
-        let meanSpeed = 100.0
-        let stdevSpeed = 30.0
+        let meanSpeed = 80.0
+        let stdevSpeed = 20.0
         var xspeed = abs(GaussianRandomDistribution.sample(meanSpeed, stdev: stdevSpeed))
         if (xpos > parentFrame.midX)
         {
