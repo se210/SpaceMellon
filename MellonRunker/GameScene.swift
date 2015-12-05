@@ -137,6 +137,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.addChild(rightBoundary)
         self.addChild(ceilingBoundary)
         self.addChild(floorBoundary)
+        
+        let farBoundarySize = CGSize(width: screenRect.width+200, height: screenRect.height+200)
+        let farBoundaryOrigin = CGPoint(x: screenRect.midX-farBoundarySize.width/2.0, y: screenRect.midY-farBoundarySize.height/2.0)
+        let farBoundaryRect = CGRect(origin: farBoundaryOrigin, size: farBoundarySize)
+        let farBoundary = SKNode()
+        farBoundary.physicsBody = SKPhysicsBody(edgeLoopFromRect: farBoundaryRect)
+        farBoundary.physicsBody?.categoryBitMask = farBoundaryCategory
+        farBoundary.physicsBody?.contactTestBitMask = asteroidCategory
+        farBoundary.physicsBody?.collisionBitMask = 0
+        self.addChild(farBoundary)
     }
     
     override func didMoveToView(view: SKView) {
@@ -171,10 +181,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     func generateAsteroids() {
         for _ in 1...5
         {
-            // test ateroid
-            let ma1 = Asteroid(parentFrame: self.frame)
-            ma1.asteroid.zPosition = 1.0
-            addChild(ma1.asteroid)
+            let asteroid = Asteroid(parentFrame: self.frame)
+            asteroid.zPosition = 1.0
+            addChild(asteroid)
         }
     }
     /*
@@ -330,6 +339,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             // decrement number of lives
             self.numberOfLives--
             self.livesLabel.text = "Lives: \(self.numberOfLives)"
+        }
+        // if asteroid hit a boundary
+        else if (firstBody.categoryBitMask & asteroidCategory != 0 && secondBody.categoryBitMask & farBoundaryCategory != 0)
+        {
+            if let asteroid = firstBody.node as? Asteroid
+            {
+                asteroid.removeFromParent()
+                self.score++
+                self.scoreLabel.text = "Score: \(self.score)"
+            }
         }
     }
     

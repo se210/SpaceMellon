@@ -15,6 +15,7 @@ let paddleCategory: UInt32 = 0x1 << 2
 let ballCategory: UInt32 = 0x1 << 3
 let blockCategory: UInt32 = 0x1 << 4
 let boundaryCategory: UInt32 = 0x1 << 5
+let farBoundaryCategory: UInt32 = 0x1 << 6
 /*let paddleCategory: UInt32 = 0x1 << 2
 let sheepCategory: UInt32 = 0x1 << 3
 let wolfCategory: UInt32 = 0x1 << 4*/

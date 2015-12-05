@@ -8,11 +8,11 @@
 
 import SpriteKit
 
-class Asteroid
+class Asteroid : SKSpriteNode
 {
-    let asteroid: SKSpriteNode
-    
     let asteroidNames: [String] = ["a1","a3","a4","b4","c1","c3","c4","d1","d3","d4"]
+    
+    var boundaryCollisionCount = 0
     
     // Creates a random asteroid
     init(parentFrame: CGRect)
@@ -20,7 +20,8 @@ class Asteroid
         let randomIdx = Int(arc4random_uniform(UInt32(asteroidNames.count)))
         let asteroidName = asteroidNames[randomIdx]
         
-        asteroid = SKSpriteNode(imageNamed: asteroidName)
+        let asteroidTexture = SKTexture(imageNamed: asteroidName)
+        super.init(texture: asteroidTexture, color: UIColor.whiteColor(), size: asteroidTexture.size())
         
         // get random starting position within boundary
         // side - 0: top, 1: right, 2: bottom, 3: left
@@ -33,11 +34,11 @@ class Asteroid
                                                             max: Double(parentFrame.maxX)))
             if (side == 0)
             {
-                ypos = parentFrame.maxY + 100.0
+                ypos = parentFrame.maxY + 50.0
             }
             else
             {
-                ypos = parentFrame.minY - 100.0
+                ypos = parentFrame.minY - 50.0
             }
         }
         else
@@ -46,42 +47,46 @@ class Asteroid
                 max: Double(parentFrame.maxY)))
             if (side == 1)
             {
-                xpos = parentFrame.maxX + 100.0
+                xpos = parentFrame.maxX + 50.0
             }
             else
             {
-                xpos = parentFrame.minX - 100.0
+                xpos = parentFrame.minX - 50.0
             }
 
         }
         
-        asteroid.position = CGPoint(x: xpos, y: ypos)
+        self.position = CGPoint(x: xpos, y: ypos)
         
         // asteroid physics
-        asteroid.physicsBody = SKPhysicsBody(texture: asteroid.texture!, size: asteroid.size)
-        asteroid.physicsBody?.categoryBitMask = asteroidCategory
-        asteroid.physicsBody?.contactTestBitMask = spaceshipCategory
-        asteroid.physicsBody?.collisionBitMask = spaceshipCategory
-        asteroid.physicsBody?.affectedByGravity = false
-        asteroid.physicsBody?.dynamic = true
-        asteroid.physicsBody?.restitution = 1.0
+        self.physicsBody = SKPhysicsBody(texture: asteroidTexture, size: asteroidTexture.size())
+        self.physicsBody?.categoryBitMask = asteroidCategory
+        self.physicsBody?.contactTestBitMask = spaceshipCategory|farBoundaryCategory
+        self.physicsBody?.collisionBitMask = spaceshipCategory
+        self.physicsBody?.affectedByGravity = false
+        self.physicsBody?.dynamic = true
+        self.physicsBody?.restitution = 1.0
         
         // get random velocity
         let meanSpeed = 100.0
         let stdevSpeed = 30.0
         var xspeed = abs(GaussianRandomDistribution.sample(meanSpeed, stdev: stdevSpeed))
-        if (side == 1)
+        if (xpos > parentFrame.midX)
         {
             xspeed = -xspeed
         }
         
         var yspeed = abs(GaussianRandomDistribution.sample(meanSpeed, stdev: stdevSpeed))
-        if (side == 0)
+        if (ypos > parentFrame.midY)
         {
             yspeed = -yspeed
         }
         
-        asteroid.physicsBody?.velocity = CGVector(dx: xspeed, dy: yspeed)
-        asteroid.physicsBody?.angularVelocity = -CGFloat(2 * M_PI)
+        self.physicsBody?.velocity = CGVector(dx: xspeed, dy: yspeed)
+        self.physicsBody?.angularVelocity = -CGFloat(2 * M_PI)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
