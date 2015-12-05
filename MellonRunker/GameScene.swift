@@ -3,7 +3,7 @@
 //  MellonRunker
 //
 //  Created by Gihyuk Ko on 11/23/15.
-//  Copyright © 2015 Gihyuk Ko. All rights reserved.
+//  Copyright © 2015 Gihyuk Ko and Se-Joon Chung. All rights reserved.
 //
 
 // Simply copied from Sally's brickbreaker
@@ -80,10 +80,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.spaceship.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "spaceship0"), size: self.spaceship.size)
         
         self.spaceship.physicsBody?.categoryBitMask = spaceshipCategory
-        self.spaceship.physicsBody?.contactTestBitMask = astroidCategory
+        self.spaceship.physicsBody?.contactTestBitMask = asteroidCategory
         self.spaceship.physicsBody?.affectedByGravity = false
         //self.spaceship.physicsBody?.dynamic = false
-            
         
         self.physicsBody?.usesPreciseCollisionDetection = true
         
@@ -102,7 +101,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.addChild(self.controller)
         self.addChild(self.controlpad)
         
-        /*
+        
         // initialize the walls and ceiling
         let screenRect = self.frame
         let wallSize = CGSizeMake(1,CGRectGetHeight(screenRect))
@@ -123,16 +122,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         ceilingBoundary.position = CGPointMake(CGRectGetMidX(screenRect),CGRectGetMaxY(screenRect) - self.kScoreHeight / 2.0)  // take a room for the scores labels
         ceilingBoundary.physicsBody?.dynamic = false
         
+        let floorBoundary = SKSpriteNode(color:UIColor.blackColor(), size: ceilingSize)
+        floorBoundary.physicsBody = SKPhysicsBody(rectangleOfSize: floorBoundary.size)
+        floorBoundary.position = CGPointMake(CGRectGetMidX(screenRect),CGRectGetMinY(screenRect))
+        floorBoundary.physicsBody?.dynamic = false
+        
         self.addChild(leftBoundary)
         self.addChild(rightBoundary)
         self.addChild(ceilingBoundary)
-        */
+        self.addChild(floorBoundary)
+        
     }
     
     override func didMoveToView(view: SKView) {
         if (!isSetup) { // when the game is not setup
-            self.generateAstroids()
-            self.setupSceneWithBlocks()
+            self.generateAsteroids()
+            //self.setupSceneWithBlocks()
             self.setupScoreDisplay()
             self.isSetup = true
         }
@@ -158,10 +163,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     }
     
     // generate
-    func generateAstroids() {
+    func generateAsteroids() {
         // TODO
     }
-    
+    /*
     // Setup the blocks for the game
     func setupSceneWithBlocks() {
         // Start in the upper left corner just under the score label
@@ -205,7 +210,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             startingX = 0
             col = 0
         }
-    }
+    } */
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         var randomXOffset: CGFloat = (CGFloat(random()) / CGFloat(RAND_MAX)) / 1.5  // generating random direction which ball moves
@@ -282,13 +287,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         if (self.spaceship.position.y < 0) {
             // reset ball
             self.spaceship.physicsBody?.velocity = CGVectorMake(0,0)
-            self.spaceship.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame))
-            self.ballIsMoving = false
-            
-            // reset paddle position
             var centerPoint = CGRectGetCenter(self.frame)
-            centerPoint.y = self.paddle.size.height / 2.0
-            self.paddle.position = centerPoint
+            centerPoint.y = self.spaceship.size.height / 2.0
+            self.spaceship.position = centerPoint
+            self.ballIsMoving = false
             
             // decrement number of lives
             self.numberOfLives--
@@ -309,6 +311,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             secondBody = contact.bodyB
         }
         
+        // if spaceship and asteroid collided
+        if (firstBody.categoryBitMask & asteroidCategory != 0 && secondBody.categoryBitMask & spaceshipCategory != 0) {
+            // reset spaceship
+            self.spaceship.physicsBody?.velocity = CGVectorMake(0,0)
+            self.spaceship.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame))
+            self.ballIsMoving = false
+            
+            // reset paddle position
+            var centerPoint = CGRectGetCenter(self.frame)
+            centerPoint.y = self.paddle.size.height / 2.0
+            self.paddle.position = centerPoint
+            
+            // decrement number of lives
+            self.numberOfLives--
+            self.livesLabel.text = "Lives: \(self.numberOfLives)"
+        }
+        
         // if ball and paddle collided
         if (firstBody.categoryBitMask & paddleCategory != 0 && secondBody.categoryBitMask & ballCategory != 0) {
             let ballVector = self.spaceship.physicsBody!.velocity
@@ -319,7 +338,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     }
     
     func handleContact(ball: SKSpriteNode, block: SKSpriteNode) {
-        // TODO
+        // remove the block that the ball hit and then increase score
+        block.removeFromParent()
+        self.score++
+        self.scoreLabel.text = "Score: \(self.score)"
     }
     
     required init(coder aDecoder: NSCoder) {

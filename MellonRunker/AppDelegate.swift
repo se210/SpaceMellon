@@ -3,7 +3,7 @@
 //  MellonRunker
 //
 //  Created by Gihyuk Ko on 11/16/15.
-//  Copyright © 2015 Gihyuk Ko. All rights reserved.
+//  Copyright © 2015 Gihyuk Ko and Se-Joon Chung. All rights reserved.
 //
 
 import UIKit
