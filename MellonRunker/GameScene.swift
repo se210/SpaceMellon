@@ -138,7 +138,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.addChild(rightBoundary)
         self.addChild(ceilingBoundary)
         self.addChild(floorBoundary)
-        
     }
     
     override func didMoveToView(view: SKView) {
@@ -316,38 +315,48 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         var firstBody: SKPhysicsBody
         var secondBody: SKPhysicsBody
         if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask) {
-            firstBody = contact.bodyB
-            secondBody = contact.bodyA
-        }
-        else {
             firstBody = contact.bodyA
             secondBody = contact.bodyB
+        }
+        else {
+            firstBody = contact.bodyB
+            secondBody = contact.bodyA
         }
         
         // if spaceship and asteroid collided
         if (firstBody.categoryBitMask & asteroidCategory != 0 && secondBody.categoryBitMask & spaceshipCategory != 0) {
             // reset spaceship
+            self.explosion()
             self.spaceship.physicsBody?.velocity = CGVectorMake(0,0)
-            self.spaceship.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame))
-            self.ballIsMoving = false
-            
-            // reset paddle position
             var centerPoint = CGRectGetCenter(self.frame)
-            centerPoint.y = self.paddle.size.height / 2.0
-            self.paddle.position = centerPoint
+            centerPoint.y = self.spaceship.size.height / 2.0
+            self.spaceship.position = centerPoint
+            self.ballIsMoving = false
             
             // decrement number of lives
             self.numberOfLives--
             self.livesLabel.text = "Lives: \(self.numberOfLives)"
         }
-        
-        // if ball and paddle collided
-        if (firstBody.categoryBitMask & paddleCategory != 0 && secondBody.categoryBitMask & ballCategory != 0) {
-            let ballVector = self.spaceship.physicsBody!.velocity
-            let normalPoint = vecNormalize(CGPointMake(ballVector.dx,ballVector.dy))
-            let scaledPoint = vecMult(normalPoint, b: 0.04) // impulse we want to apply
-            self.spaceship.physicsBody?.applyImpulse(CGVectorMake(scaledPoint.x,scaledPoint.y))
+    }
+    
+    func explosion() {
+        let explosionAtlas = SKTextureAtlas(named: "Explosion")
+        var explosionFrames = [SKTexture]()
+        let numImages = explosionAtlas.textureNames.count
+        for (var i=0; i<numImages; i++) {
+            let textureName = String(format: "expl_07_%04d", i)
+            explosionFrames.append(explosionAtlas.textureNamed(textureName))
         }
+        let firstFrame = explosionFrames[0]
+        self.spaceship.texture = firstFrame
+        startAnimation(explosionFrames)
+        
+    }
+    
+    func startAnimation(animationFrames: [SKTexture]) {
+        //This is our general runAction method to make our animation start.
+        //By using a withKey if this gets called while already running it will remove the first action before starting this again.
+        self.spaceship.runAction(SKAction.animateWithTextures(animationFrames, timePerFrame: 0.05, resize: false, restore: true), withKey:"animation")
     }
     
     func handleContact(ball: SKSpriteNode, block: SKSpriteNode) {
