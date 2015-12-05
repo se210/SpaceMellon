@@ -53,7 +53,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.ballIsMoving = false
         self.spaceship = SKSpriteNode(imageNamed: "ball")
         self.paddle = SKSpriteNode(imageNamed:"paddle")
-        self.spaceship = SKSpriteNode(imageNamed: "spaceship")
+        self.spaceship = SKSpriteNode(imageNamed: "spaceship1")
         self.astroid = SKSpriteNode(imageNamed: "astroid")
         self.scoreLabel = SKLabelNode(fontNamed: "HelveticaNeue-Light")
         self.livesLabel = SKLabelNode(fontNamed: "HelveticaNeue-Light")
@@ -78,12 +78,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         addChild(ma1.asteroid)
         
         //initialize the spaceship
-        self.spaceship.physicsBody = SKPhysicsBody(circleOfRadius: self.spaceship.size.width / 2.0)
+        self.spaceship.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "spaceship0"), size: self.spaceship.size)
         
         self.spaceship.physicsBody?.categoryBitMask = spaceshipCategory
         self.spaceship.physicsBody?.contactTestBitMask = astroidCategory
         self.spaceship.physicsBody?.affectedByGravity = false
-        self.spaceship.physicsBody?.dynamic = false
+        //self.spaceship.physicsBody?.dynamic = false
+            
         
         self.physicsBody?.usesPreciseCollisionDetection = true
         
@@ -232,7 +233,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         let touch = touches.first! as UITouch
         let location = touch.locationInNode(self)
-        let padradius = self.controlpad.frame.width / 3.0
+        let padradius = self.controlpad.size.width / 3.0
         let padlocation = self.controlpad.position
         let difference = CGPointMake(location.x - padlocation.x, location.y - padlocation.y)
         
@@ -253,7 +254,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     }
     
     func moveShipByVector(point: CGPoint) {
-        
+        let force = CGVectorMake(2*point.x, 2*point.y)
+        self.spaceship.physicsBody?.velocity = force
+        self.spaceship.physicsBody?.angularVelocity = 1
+        //let moveSpaceshipAction = SKAction.moveBy(force, duration: 0.1)
+        //self.spaceship.runAction(moveSpaceshipAction)
     }
     
     func movePaddleToPoint(point: CGPoint) {
