@@ -51,7 +51,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.numberOfLives = 3
         self.isSetup = false
         self.ballIsMoving = false
-        self.spaceship = SKSpriteNode(imageNamed: "ball")
         self.paddle = SKSpriteNode(imageNamed:"paddle")
         self.spaceship = SKSpriteNode(imageNamed: "spaceship1")
         self.astroid = SKSpriteNode(imageNamed: "astroid")
