@@ -57,7 +57,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.scoreLabel = SKLabelNode(fontNamed: "HelveticaNeue-Light")
         self.livesLabel = SKLabelNode(fontNamed: "HelveticaNeue-Light")
         self.controller = SKSpriteNode(imageNamed: "controller_dark")
-        self.controlpad = SKSpriteNode(imageNamed: "controlpad_light")
+        self.controlpad = SKSpriteNode(imageNamed: "controlpad_dark")
         
         super.init(size: size)
         
@@ -77,6 +77,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.spaceship.physicsBody?.categoryBitMask = spaceshipCategory
         self.spaceship.physicsBody?.contactTestBitMask = asteroidCategory
         self.spaceship.physicsBody?.affectedByGravity = false
+        self.spaceship.physicsBody?.allowsRotation = false
         //self.spaceship.physicsBody?.dynamic = false
         
         self.physicsBody?.usesPreciseCollisionDetection = true
@@ -86,7 +87,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.addChild(self.spaceship)
         
         self.controller.alpha = 0.6
-        self.controlpad.alpha = 1
+        self.controlpad.alpha = 0.4
         self.controller.zPosition = -3.0
         self.controlpad.zPosition = -4.0
         self.controller.hidden = true
@@ -290,7 +291,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             self.spaceship.zRotation = CGFloat(M_PI) + atan(-point.x/point.y)
         }
         self.spaceship.physicsBody?.velocity = CGVectorMake(point.x, point.y)
-        self.spaceship.physicsBody?.allowsRotation = false
     }
     
     override func update(currentTime: CFTimeInterval) { // check if the player lost the game
