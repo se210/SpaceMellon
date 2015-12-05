@@ -81,9 +81,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         
         self.physicsBody?.usesPreciseCollisionDetection = true
         
-        var centerPoint = CGRectGetCenter(self.frame)
-        centerPoint.y = self.spaceship.size.height / 2.0
-        self.spaceship.position = centerPoint
+        self.spaceship.position = CGRectGetCenter(self.frame)
         
         self.addChild(self.spaceship)
         
@@ -299,9 +297,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         if (self.spaceship.position.y < 0) {
             // reset ball
             self.spaceship.physicsBody?.velocity = CGVectorMake(0,0)
-            var centerPoint = CGRectGetCenter(self.frame)
-            centerPoint.y = self.spaceship.size.height / 2.0
-            self.spaceship.position = centerPoint
+            self.spaceship.position = CGRectGetCenter(self.frame)
             self.ballIsMoving = false
             
             // decrement number of lives
@@ -328,9 +324,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             // reset spaceship
             self.explosion()
             self.spaceship.physicsBody?.velocity = CGVectorMake(0,0)
-            var centerPoint = CGRectGetCenter(self.frame)
-            centerPoint.y = self.spaceship.size.height / 2.0
-            self.spaceship.position = centerPoint
+            self.spaceship.position = CGRectGetCenter(self.frame)
             self.ballIsMoving = false
             
             // decrement number of lives
