@@ -22,20 +22,50 @@ class Asteroid
         
         asteroid = SKSpriteNode(imageNamed: asteroidName)
         
-        // get random starting position
-        asteroid.position = CGPoint(x:CGRectGetMidX(parentFrame), y:CGRectGetMidY(parentFrame))
+        // get random starting position within boundary
+        var x = CGFloat(UniformRandomDistribution.sample(50.0, max: 200.0))
+        var xpos: CGFloat = parentFrame.maxX + x
+        if (UniformRandomDistribution.sample(-1.0, max: 1.0) < 0.0)
+        {
+            x = -x
+            xpos = x
+        }
+        
+        var y = CGFloat(UniformRandomDistribution.sample(50.0, max: 200.0))
+        var ypos: CGFloat = parentFrame.maxY + y
+        if (UniformRandomDistribution.sample(-1.0, max: 1.0) < 0.0)
+        {
+            y = -y
+            ypos = y
+        }
+        
+        asteroid.position = CGPoint(x: xpos, y: ypos)
+//        asteroid.position = CGPoint(x: parentFrame.midX, y: parentFrame.midY)
         
         // asteroid physics
         asteroid.physicsBody = SKPhysicsBody(texture: asteroid.texture!, size: asteroid.size)
-        asteroid.physicsBody?.categoryBitMask = astroidCategory
+        asteroid.physicsBody?.categoryBitMask = asteroidCategory
         asteroid.physicsBody?.contactTestBitMask = spaceshipCategory
+        asteroid.physicsBody?.collisionBitMask = spaceshipCategory
         asteroid.physicsBody?.affectedByGravity = false
         asteroid.physicsBody?.dynamic = true
         
         // get random velocity
-        let angle = UniformRandomDistribution.sample(0.0, max: 2 * M_PI)
-        let speed = GaussianRandomDistribution.sample(100.0, stdev: 100.0)
-        asteroid.physicsBody?.velocity = CGVector(dx: speed * cos(angle), dy: speed * sin(angle))
+        let meanSpeed = 100.0
+        let stdevSpeed = 100.0
+        var xspeed = GaussianRandomDistribution.sample(meanSpeed, stdev: stdevSpeed)
+        if (x < 0)
+        {
+            xspeed = abs(xspeed)
+        }
+        
+        var yspeed = GaussianRandomDistribution.sample(meanSpeed, stdev: stdevSpeed)
+        if (y < 0)
+        {
+            yspeed = abs(yspeed)
+        }
+        
+        asteroid.physicsBody?.velocity = CGVector(dx: xspeed, dy: yspeed)
         asteroid.physicsBody?.angularVelocity = -CGFloat(2 * M_PI)
     }
 }

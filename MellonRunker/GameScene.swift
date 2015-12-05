@@ -111,21 +111,33 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         leftBoundary.physicsBody = SKPhysicsBody(rectangleOfSize: leftBoundary.size)
         leftBoundary.position = CGPointMake(0,CGRectGetMidY(screenRect))    // the center of the boundary
         leftBoundary.physicsBody?.dynamic = false
+        leftBoundary.physicsBody?.categoryBitMask = boundaryCategory
+        leftBoundary.physicsBody?.contactTestBitMask = spaceshipCategory
+        leftBoundary.physicsBody?.collisionBitMask = spaceshipCategory
         
         let rightBoundary = SKSpriteNode(color: UIColor.blackColor(), size: wallSize)
         rightBoundary.physicsBody = SKPhysicsBody(rectangleOfSize: rightBoundary.size)
         rightBoundary.position = CGPointMake(CGRectGetMaxX(screenRect),CGRectGetMidY(screenRect))
         rightBoundary.physicsBody?.dynamic = false
+        rightBoundary.physicsBody?.categoryBitMask = boundaryCategory
+        rightBoundary.physicsBody?.contactTestBitMask = spaceshipCategory
+        rightBoundary.physicsBody?.collisionBitMask = spaceshipCategory
         
         let ceilingBoundary = SKSpriteNode(color: UIColor.blackColor(), size: ceilingSize)
         ceilingBoundary.physicsBody = SKPhysicsBody(rectangleOfSize: ceilingBoundary.size)
         ceilingBoundary.position = CGPointMake(CGRectGetMidX(screenRect),CGRectGetMaxY(screenRect) - self.kScoreHeight / 2.0)  // take a room for the scores labels
         ceilingBoundary.physicsBody?.dynamic = false
+        ceilingBoundary.physicsBody?.categoryBitMask = boundaryCategory
+        ceilingBoundary.physicsBody?.contactTestBitMask = spaceshipCategory
+        ceilingBoundary.physicsBody?.collisionBitMask = spaceshipCategory
         
         let floorBoundary = SKSpriteNode(color:UIColor.blackColor(), size: ceilingSize)
         floorBoundary.physicsBody = SKPhysicsBody(rectangleOfSize: floorBoundary.size)
         floorBoundary.position = CGPointMake(CGRectGetMidX(screenRect),CGRectGetMinY(screenRect))
         floorBoundary.physicsBody?.dynamic = false
+        floorBoundary.physicsBody?.categoryBitMask = boundaryCategory
+        floorBoundary.physicsBody?.contactTestBitMask = spaceshipCategory
+        floorBoundary.physicsBody?.collisionBitMask = spaceshipCategory
         
         self.addChild(leftBoundary)
         self.addChild(rightBoundary)
