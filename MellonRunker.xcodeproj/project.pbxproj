@@ -15,6 +15,17 @@
 		42F9C9B61C03DA4B00856906 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F9C9B51C03DA4B00856906 /* GameScene.swift */; };
 		42F9C9B81C03DAF400856906 /* SpriteCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F9C9B71C03DAF400856906 /* SpriteCategories.swift */; };
 		CE75FB111C1283B400FF6613 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE75FB101C1283B400FF6613 /* SplashViewController.swift */; };
+		CE75FB131C12B6C700FF6613 /* ma1.atlas in Resources */ = {isa = PBXBuildFile; fileRef = CE75FB121C12B6C700FF6613 /* ma1.atlas */; };
+		CE75FB171C12BF5800FF6613 /* Asteroid.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE75FB161C12BF5800FF6613 /* Asteroid.swift */; };
+		CE75FB211C12C4A200FF6613 /* ma3.atlas in Resources */ = {isa = PBXBuildFile; fileRef = CE75FB181C12C4A200FF6613 /* ma3.atlas */; };
+		CE75FB221C12C4A200FF6613 /* ma4.atlas in Resources */ = {isa = PBXBuildFile; fileRef = CE75FB191C12C4A200FF6613 /* ma4.atlas */; };
+		CE75FB231C12C4A200FF6613 /* mb4.atlas in Resources */ = {isa = PBXBuildFile; fileRef = CE75FB1A1C12C4A200FF6613 /* mb4.atlas */; };
+		CE75FB241C12C4A200FF6613 /* mc1.atlas in Resources */ = {isa = PBXBuildFile; fileRef = CE75FB1B1C12C4A200FF6613 /* mc1.atlas */; };
+		CE75FB251C12C4A200FF6613 /* mc3.atlas in Resources */ = {isa = PBXBuildFile; fileRef = CE75FB1C1C12C4A200FF6613 /* mc3.atlas */; };
+		CE75FB261C12C4A200FF6613 /* mc4.atlas in Resources */ = {isa = PBXBuildFile; fileRef = CE75FB1D1C12C4A200FF6613 /* mc4.atlas */; };
+		CE75FB271C12C4A200FF6613 /* md1.atlas in Resources */ = {isa = PBXBuildFile; fileRef = CE75FB1E1C12C4A200FF6613 /* md1.atlas */; };
+		CE75FB281C12C4A200FF6613 /* md3.atlas in Resources */ = {isa = PBXBuildFile; fileRef = CE75FB1F1C12C4A200FF6613 /* md3.atlas */; };
+		CE75FB291C12C4A200FF6613 /* md4.atlas in Resources */ = {isa = PBXBuildFile; fileRef = CE75FB201C12C4A200FF6613 /* md4.atlas */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +39,17 @@
 		42F9C9B51C03DA4B00856906 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		42F9C9B71C03DAF400856906 /* SpriteCategories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpriteCategories.swift; sourceTree = "<group>"; };
 		CE75FB101C1283B400FF6613 /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		CE75FB121C12B6C700FF6613 /* ma1.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = ma1.atlas; sourceTree = "<group>"; };
+		CE75FB161C12BF5800FF6613 /* Asteroid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Asteroid.swift; sourceTree = "<group>"; };
+		CE75FB181C12C4A200FF6613 /* ma3.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = ma3.atlas; sourceTree = "<group>"; };
+		CE75FB191C12C4A200FF6613 /* ma4.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = ma4.atlas; sourceTree = "<group>"; };
+		CE75FB1A1C12C4A200FF6613 /* mb4.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = mb4.atlas; sourceTree = "<group>"; };
+		CE75FB1B1C12C4A200FF6613 /* mc1.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = mc1.atlas; sourceTree = "<group>"; };
+		CE75FB1C1C12C4A200FF6613 /* mc3.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = mc3.atlas; sourceTree = "<group>"; };
+		CE75FB1D1C12C4A200FF6613 /* mc4.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = mc4.atlas; sourceTree = "<group>"; };
+		CE75FB1E1C12C4A200FF6613 /* md1.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = md1.atlas; sourceTree = "<group>"; };
+		CE75FB1F1C12C4A200FF6613 /* md3.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = md3.atlas; sourceTree = "<group>"; };
+		CE75FB201C12C4A200FF6613 /* md4.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = md4.atlas; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,12 +82,23 @@
 		42F9C9A01BFAA13D00856906 /* MellonRunker */ = {
 			isa = PBXGroup;
 			children = (
+				CE75FB121C12B6C700FF6613 /* ma1.atlas */,
+				CE75FB181C12C4A200FF6613 /* ma3.atlas */,
+				CE75FB191C12C4A200FF6613 /* ma4.atlas */,
+				CE75FB1A1C12C4A200FF6613 /* mb4.atlas */,
+				CE75FB1B1C12C4A200FF6613 /* mc1.atlas */,
+				CE75FB1C1C12C4A200FF6613 /* mc3.atlas */,
+				CE75FB1D1C12C4A200FF6613 /* mc4.atlas */,
+				CE75FB1E1C12C4A200FF6613 /* md1.atlas */,
+				CE75FB1F1C12C4A200FF6613 /* md3.atlas */,
+				CE75FB201C12C4A200FF6613 /* md4.atlas */,
 				42F9C9A11BFAA13D00856906 /* AppDelegate.swift */,
 				42F9C9A51BFAA13D00856906 /* GameViewController.swift */,
 				CE75FB101C1283B400FF6613 /* SplashViewController.swift */,
 				42F9C9B51C03DA4B00856906 /* GameScene.swift */,
 				42F9C9B71C03DAF400856906 /* SpriteCategories.swift */,
 				42F9C9A71BFAA13D00856906 /* Main.storyboard */,
+				CE75FB161C12BF5800FF6613 /* Asteroid.swift */,
 				42F9C9AA1BFAA13D00856906 /* Assets.xcassets */,
 				42F9C9AC1BFAA13D00856906 /* LaunchScreen.storyboard */,
 				42F9C9AF1BFAA13D00856906 /* Info.plist */,
@@ -131,9 +164,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE75FB281C12C4A200FF6613 /* md3.atlas in Resources */,
+				CE75FB261C12C4A200FF6613 /* mc4.atlas in Resources */,
+				CE75FB251C12C4A200FF6613 /* mc3.atlas in Resources */,
+				CE75FB221C12C4A200FF6613 /* ma4.atlas in Resources */,
+				CE75FB211C12C4A200FF6613 /* ma3.atlas in Resources */,
+				CE75FB271C12C4A200FF6613 /* md1.atlas in Resources */,
+				CE75FB231C12C4A200FF6613 /* mb4.atlas in Resources */,
 				42F9C9AE1BFAA13D00856906 /* LaunchScreen.storyboard in Resources */,
 				42F9C9AB1BFAA13D00856906 /* Assets.xcassets in Resources */,
+				CE75FB241C12C4A200FF6613 /* mc1.atlas in Resources */,
 				42F9C9A91BFAA13D00856906 /* Main.storyboard in Resources */,
+				CE75FB131C12B6C700FF6613 /* ma1.atlas in Resources */,
+				CE75FB291C12C4A200FF6613 /* md4.atlas in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,6 +191,7 @@
 				42F9C9A61BFAA13D00856906 /* GameViewController.swift in Sources */,
 				42F9C9B81C03DAF400856906 /* SpriteCategories.swift in Sources */,
 				42F9C9A21BFAA13D00856906 /* AppDelegate.swift in Sources */,
+				CE75FB171C12BF5800FF6613 /* Asteroid.swift in Sources */,
 				CE75FB111C1283B400FF6613 /* SplashViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

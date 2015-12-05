@@ -72,6 +72,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.physicsWorld.gravity = CGVectorMake(0,0)
         self.physicsWorld.contactDelegate = self    // whenever two things contact each other, myself controls it.
         
+        // test ateroid
+        let ma1 = Asteroid(parentFrame: self.frame)
+        ma1.asteroid.zPosition = 1.0
+        addChild(ma1.asteroid)
         
         //initialize the spaceship
         self.spaceship.physicsBody = SKPhysicsBody(circleOfRadius: self.spaceship.size.width / 2.0)
