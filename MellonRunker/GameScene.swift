@@ -152,7 +152,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.scoreLabel.text = "Score: 0"
         self.scoreLabel.horizontalAlignmentMode = .Left
         self.scoreLabel.fontSize = 18.0
-        print(self.size)
         self.scoreLabel.position = CGPointMake(CGRectGetMinX(self.frame),
             CGRectGetMaxY(self.frame) - self.scoreLabel.frame.size.height)
         self.addChild(self.scoreLabel)
