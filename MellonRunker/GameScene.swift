@@ -142,7 +142,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     
     override func didMoveToView(view: SKView) {
         if (!isSetup) { // when the game is not setup
-            self.generateAsteroids()
+            var timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("generateAsteroids"), userInfo: nil, repeats: true)
             //self.setupSceneWithBlocks()
             self.setupScoreDisplay()
             self.isSetup = true
@@ -170,7 +170,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     
     // generate
     func generateAsteroids() {
-        for _ in 1...10
+        for _ in 1...5
         {
             // test ateroid
             let ma1 = Asteroid(parentFrame: self.frame)
