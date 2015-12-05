@@ -11,7 +11,8 @@
 import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate{
-    var ball: SKSpriteNode
+    var spaceship: SKSpriteNode
+    
     var paddle: SKSpriteNode
     var isSetup: Bool
     var ballIsMoving: Bool
@@ -55,20 +56,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.physicsWorld.gravity = CGVectorMake(0,0)
         self.physicsWorld.contactDelegate = self    // whenever two things contact each other, myself controls it.
         
-        // initialize the ball
-        self.ball.physicsBody = SKPhysicsBody(circleOfRadius: self.ball.size.width / 2.0)   // ball is an image
         
-        self.ball.physicsBody?.categoryBitMask = ballCategory   // which categories this physics body belongs to.
-        self.ball.physicsBody?.contactTestBitMask = blockCategory   // which categories of bodies cause intersection notifications with this physics body.
+        //initialize the spaceship
+        self.spaceship.physicsBody = SKPhysicsBody(circleOfRadius: self.ball.size.width / 2.0)  // ball is an image
+        
+        self.spaceship.physicsBody?.categoryBitMask = spaceshipCategory
+        self.spaceship.physicsBody?.contactTestBitMask = rockCategory
+        self.spaceship.physicsBody?.affectedByGravity = false
+        self.spaceship.physicsBody?.dynamic = false
+        
         self.physicsBody?.usesPreciseCollisionDetection = true
         
-        self.ball.position = CGRectGetCenter(self.frame)
+        self.spaceship.position = CGRectGetCenter(self.frame)
         
-        self.ball.physicsBody?.friction = 0.0   // we don't want ball to slow down when contact with block.
-        self.ball.physicsBody?.restitution = 1.0    // how much energy lost when bounces other object.
-        self.ball.physicsBody?.linearDamping = 0.0  // reduces object's velocity.
+        self.spaceship.physicsBody?.friction = 0.0
         
-        self.addChild(self.ball)    // add a node to the class
+        self.addChild(self.spaceship)
         
         // initialize the paddle
         self.paddle.physicsBody = SKPhysicsBody(rectangleOfSize: self.paddle.size)
