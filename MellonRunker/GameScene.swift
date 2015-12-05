@@ -52,7 +52,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.isSetup = false
         self.ballIsMoving = false
         self.paddle = SKSpriteNode(imageNamed:"paddle")
-        self.spaceship = SKSpriteNode(imageNamed: "spaceship1")
+        self.spaceship = SKSpriteNode(imageNamed: "spaceship0")
         self.astroid = SKSpriteNode(imageNamed: "astroid")
         self.scoreLabel = SKLabelNode(fontNamed: "HelveticaNeue-Light")
         self.livesLabel = SKLabelNode(fontNamed: "HelveticaNeue-Light")
@@ -215,7 +215,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         
         let touch = touches.first! as UITouch
         let location = touch.locationInNode(self)
-        self.movePaddleToPoint(location)    // call movePaddleToPoint method
         
         if (!self.ballIsMoving) {
             self.spaceship.physicsBody?.applyImpulse(CGVectorMake(randomXOffset, -2))
@@ -238,12 +237,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         
         // move controller on controlpad according to its direction
         if (vecLength(difference) > Float(padradius)) {
-            self.controller.position = CGPointMake(padlocation.x + padradius * vecNormalize(difference).x,
-                                                   padlocation.y + padradius * vecNormalize(difference).y)
+            let motivation = CGPointMake(padradius * vecNormalize(difference).x,
+                                         padradius * vecNormalize(difference).y)
+            self.controller.position = CGPointMake(padlocation.x + motivation.x,
+                                                   padlocation.y + motivation.y)
+            self.moveShipByVector(difference)
         } else {
             self.controller.position = location
+            self.moveShipByVector(difference)
         }
-        self.moveShipByVector(difference)
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -253,16 +255,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     }
     
     func moveShipByVector(point: CGPoint) {
-        let force = CGVectorMake(2*point.x, 2*point.y)
-        self.spaceship.physicsBody?.velocity = force
-        self.spaceship.physicsBody?.angularVelocity = 1
-        //let moveSpaceshipAction = SKAction.moveBy(force, duration: 0.1)
-        //self.spaceship.runAction(moveSpaceshipAction)
-    }
-    
-    func movePaddleToPoint(point: CGPoint) {
-        let movePaddleAction = SKAction.moveTo(CGPointMake(point.x, self.paddle.position.y), duration: 0.1) // make an action which moves paddle
-        self.paddle.runAction(movePaddleAction)
+        let spaceshipVector = self.spaceship.physicsBody!.velocity
+        
+        // change texture as velocity changes
+        if (vecLength(CGPointMake(spaceshipVector.dx, spaceshipVector.dy)) < 50) {
+            self.spaceship.texture = SKTexture(imageNamed: "spaceship0")
+        } else if (vecLength(CGPointMake(spaceshipVector.dx, spaceshipVector.dy)) < 100) {
+            self.spaceship.texture = SKTexture(imageNamed: "spaceship1")
+        } else if (vecLength(CGPointMake(spaceshipVector.dx, spaceshipVector.dy)) < 150) {
+            self.spaceship.texture = SKTexture(imageNamed: "spaceship2")
+        } else {
+            self.spaceship.texture = SKTexture(imageNamed: "spaceship3")
+        }
+        
+        // set the rotation for the spaceship
+        if (point.y > 0) {
+            self.spaceship.zRotation = atan(-point.x/point.y)
+        } else {
+            self.spaceship.zRotation = CGFloat(M_PI) + atan(-point.x/point.y)
+        }
+        self.spaceship.physicsBody?.velocity = CGVectorMake(point.x, point.y)
+        self.spaceship.physicsBody?.allowsRotation = false
     }
     
     override func update(currentTime: CFTimeInterval) { // check if the player lost the game
