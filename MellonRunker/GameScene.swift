@@ -12,15 +12,9 @@ import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate{
     var spaceship: SKSpriteNode
-    var astroid: SKSpriteNode
-    
-    var paddle: SKSpriteNode
     var isSetup: Bool
-    var ballIsMoving: Bool
-    var numberOfLives: Int
     var score: Int
     var scoreLabel: SKLabelNode
-    var livesLabel: SKLabelNode
     
     var controlpad: SKSpriteNode
     var controller: SKSpriteNode
@@ -48,14 +42,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     override init(size: CGSize) {
         // initialize class variables
         self.score = 0
-        self.numberOfLives = 3
         self.isSetup = false
-        self.ballIsMoving = false
-        self.paddle = SKSpriteNode(imageNamed:"paddle")
         self.spaceship = SKSpriteNode(imageNamed: "spaceship0")
-        self.astroid = SKSpriteNode(imageNamed: "astroid")
         self.scoreLabel = SKLabelNode(fontNamed: "HelveticaNeue-Light")
-        self.livesLabel = SKLabelNode(fontNamed: "HelveticaNeue-Light")
         self.controller = SKSpriteNode(imageNamed: "controller_dark")
         self.controlpad = SKSpriteNode(imageNamed: "controlpad_dark")
         
@@ -152,7 +141,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     override func didMoveToView(view: SKView) {
         if (!isSetup) { // when the game is not setup
             var timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("generateAsteroids"), userInfo: nil, repeats: true)
-            //self.setupSceneWithBlocks()
             self.setupScoreDisplay()
             self.isSetup = true
         }
@@ -166,15 +154,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.scoreLabel.position = CGPointMake(5 + self.scoreLabel.frame.size.width / 2.0,
             CGRectGetMaxY(self.frame) - self.scoreLabel.frame.size.height)
         self.addChild(self.scoreLabel)
-        
-        self.livesLabel.name = "livesLabel"
-        self.livesLabel.fontColor = SKColor.whiteColor()
-        self.livesLabel.text = "Lives: 3"
-        self.livesLabel.fontSize = 18.0
-        self.livesLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left   // align text left side
-        self.livesLabel.position = CGPointMake(CGRectGetMaxX(self.frame) - self.livesLabel.frame.size.width / 2.0 - 5,
-            CGRectGetMaxY(self.frame) - self.livesLabel.frame.size.height)
-        self.addChild(self.livesLabel)
     }
     
     // generate
@@ -186,65 +165,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             addChild(asteroid)
         }
     }
-    /*
-    // Setup the blocks for the game
-    func setupSceneWithBlocks() {
-        // Start in the upper left corner just under the score label
-        var startingX: CGFloat = 0.0
-        var startingY: CGFloat = kScoreHeight
-        var colors: [SKColor] = [SKColor.redColor(),
-            SKColor.orangeColor(),
-            SKColor.yellowColor(),
-            SKColor.greenColor(),
-            SKColor.blueColor(),
-            SKColor.purpleColor()]
-        let blockHeight: CGFloat = 22
-        let blockWidth: CGFloat = self.size.width / 12.0
-        var col: Int = 0
-        
-        // Create and add blocks to scene. This will create 4 rows and 12 columns.
-        // Outer loop: rows (loop guard might seem weird, but that's because startingY isn't 0
-        // Inner loop: columns
-        while(startingY < (blockHeight * 6)) {
-            while(startingX < self.size.width) {
-                let block = SKSpriteNode(texture:SKTexture(imageNamed: "block"),
-                    color: colors[col % colors.count], size: CGSizeMake(blockWidth,blockHeight))
-                block.colorBlendFactor = 0.7
-                
-                block.position = CGPointMake(startingX + blockWidth / 2.0, self.size.height - startingY + blockHeight / 2.0)
-                
-                block.physicsBody = SKPhysicsBody(rectangleOfSize: block.size)
-                block.physicsBody?.categoryBitMask = blockCategory
-                block.physicsBody?.contactTestBitMask = ballCategory
-                block.physicsBody?.affectedByGravity = false
-                block.physicsBody?.dynamic = false
-                
-                self.addChild(block)
-                
-                // increment
-                startingX += blockWidth
-                col++
-            }
-            //increment and reset counters for next row
-            startingY += blockHeight
-            startingX = 0
-            col = 0
-        }
-    } */
-    
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        var randomXOffset: CGFloat = (CGFloat(random()) / CGFloat(RAND_MAX)) / 1.5  // generating random direction which ball moves
-        if(arc4random() % 2 == 0) {
-            randomXOffset *= -1.0
-        }
-        
         let touch = touches.first! as UITouch
         let location = touch.locationInNode(self)
-        
-        if (!self.ballIsMoving) {
-            self.spaceship.physicsBody?.applyImpulse(CGVectorMake(randomXOffset, -2))
-            self.ballIsMoving = true
-        }
         
         // move controller and controlpad at location and reveal
         self.controlpad.position = location
@@ -302,17 +225,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.spaceship.physicsBody?.velocity = CGVectorMake(point.x, point.y)
     }
     
-    override func update(currentTime: CFTimeInterval) { // check if the player lost the game
-        if (self.spaceship.position.y < 0) {
-            // reset ball
-            self.spaceship.physicsBody?.velocity = CGVectorMake(0,0)
-            self.spaceship.position = CGRectGetCenter(self.frame)
-            self.ballIsMoving = false
-            
-            // decrement number of lives
-            self.numberOfLives--
-            self.livesLabel.text = "Lives: \(self.numberOfLives)"
-        }
+    override func update(currentTime: CFTimeInterval) {
+        // check if the player lost the game
     }
     
     // called whenever the contact happened: method from SKPhysicsContactDelegate
@@ -334,11 +248,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             self.explosion()
             self.spaceship.physicsBody?.velocity = CGVectorMake(0,0)
             self.spaceship.position = CGRectGetCenter(self.frame)
-            self.ballIsMoving = false
-            
-            // decrement number of lives
-            self.numberOfLives--
-            self.livesLabel.text = "Lives: \(self.numberOfLives)"
         }
         // if asteroid hit a boundary
         else if (firstBody.categoryBitMask & asteroidCategory != 0 && secondBody.categoryBitMask & farBoundaryCategory != 0)
