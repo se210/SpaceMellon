@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 // Menu View Controller Class
 class MenuViewController: UIViewController {
@@ -23,6 +24,8 @@ class MenuViewController: UIViewController {
     var volume: Bool = true
     var credit: Bool = false
     var option: Bool = false
+    
+    var bgmPlayer = AVAudioPlayer()
     
     let screenBounds = UIScreen.mainScreen().bounds
     
@@ -80,9 +83,19 @@ class MenuViewController: UIViewController {
         optionBox.center = CGPoint(x: CGRectGetMidX(screenBounds), y: CGRectGetMaxY(screenBounds) * 0.55)
         self.optionBox.hidden = true
         self.view.addSubview(self.optionBox)
+        
+        let bgmURL = NSBundle.mainBundle().URLForResource("menubgm", withExtension: "wav")!
+        do {
+            try bgmPlayer = AVAudioPlayer(contentsOfURL: bgmURL, fileTypeHint:nil)
+            bgmPlayer.prepareToPlay()
+        } catch {
+            return print("No music file")
+        }
+        bgmPlayer.play()
     }
     
     func play(sender: UIButton) {
+        bgmPlayer.stop()
         performSegueWithIdentifier("LoadGame", sender: self)
     }
     

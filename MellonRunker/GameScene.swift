@@ -148,9 +148,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         let bgmURL = NSBundle.mainBundle().URLForResource("menubgm", withExtension: "wav")!
         do {
             try bgmPlayer = AVAudioPlayer(contentsOfURL: bgmURL, fileTypeHint:nil)
+            bgmPlayer.prepareToPlay()
         } catch {
             return print("No music file")
         }
+        bgmPlayer.play()
+        let effectURL = NSBundle.mainBundle().URLForResource("explosion", withExtension: "wav")!
+        do {
+            try effectPlayer = AVAudioPlayer(contentsOfURL: effectURL, fileTypeHint:nil)
+        } catch {
+            return print("No music file")
+        }
+        effectPlayer.prepareToPlay()
+
     }
     
     func setupScoreDisplay() {
@@ -280,13 +290,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         }
         let firstFrame = explosionFrames[0]
         self.spaceship.texture = firstFrame
-        let effectURL = NSBundle.mainBundle().URLForResource("explosion", withExtension: "wav")!
-        do {
-            try effectPlayer = AVAudioPlayer(contentsOfURL: effectURL, fileTypeHint:nil)
-        } catch {
-            return print("No music file")
-        }
+        bgmPlayer.stop()
+        effectPlayer.play()
         startAnimation(explosionFrames)
+        //effectPlayer.stop()
     }
     
     func startAnimation(animationFrames: [SKTexture]) {
