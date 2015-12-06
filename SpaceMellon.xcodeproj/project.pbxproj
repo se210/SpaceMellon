@@ -30,7 +30,7 @@
 		42F34D4F1C13CA8400DFD49A /* menubgm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = menubgm.wav; sourceTree = "<group>"; };
 		42F34D511C13CAA400DFD49A /* explosion.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = explosion.wav; sourceTree = "<group>"; };
 		42F34D531C13D10700DFD49A /* gamebgm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = gamebgm.wav; sourceTree = "<group>"; };
-		42F9C99E1BFAA13D00856906 /* MellonRunker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MellonRunker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		42F9C99E1BFAA13D00856906 /* SpaceMellon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpaceMellon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42F9C9A11BFAA13D00856906 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		42F9C9A51BFAA13D00856906 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		42F9C9A81BFAA13D00856906 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -58,7 +58,7 @@
 		42F9C9951BFAA13C00856906 = {
 			isa = PBXGroup;
 			children = (
-				42F9C9A01BFAA13D00856906 /* MellonRunker */,
+				42F9C9A01BFAA13D00856906 /* SpaceMellon */,
 				42F9C99F1BFAA13D00856906 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -66,12 +66,12 @@
 		42F9C99F1BFAA13D00856906 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				42F9C99E1BFAA13D00856906 /* MellonRunker.app */,
+				42F9C99E1BFAA13D00856906 /* SpaceMellon.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		42F9C9A01BFAA13D00856906 /* MellonRunker */ = {
+		42F9C9A01BFAA13D00856906 /* SpaceMellon */ = {
 			isa = PBXGroup;
 			children = (
 				42F34D531C13D10700DFD49A /* gamebgm.wav */,
@@ -91,15 +91,16 @@
 				42F9C9AF1BFAA13D00856906 /* Info.plist */,
 				42C025C41C12FE8E004BB263 /* MenuViewController.swift */,
 			);
+			name = SpaceMellon;
 			path = MellonRunker;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		42F9C99D1BFAA13D00856906 /* MellonRunker */ = {
+		42F9C99D1BFAA13D00856906 /* SpaceMellon */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 42F9C9B21BFAA13D00856906 /* Build configuration list for PBXNativeTarget "MellonRunker" */;
+			buildConfigurationList = 42F9C9B21BFAA13D00856906 /* Build configuration list for PBXNativeTarget "SpaceMellon" */;
 			buildPhases = (
 				42F9C99A1BFAA13D00856906 /* Sources */,
 				42F9C99B1BFAA13D00856906 /* Frameworks */,
@@ -109,9 +110,9 @@
 			);
 			dependencies = (
 			);
-			name = MellonRunker;
+			name = SpaceMellon;
 			productName = MellonRunker;
-			productReference = 42F9C99E1BFAA13D00856906 /* MellonRunker.app */;
+			productReference = 42F9C99E1BFAA13D00856906 /* SpaceMellon.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -130,7 +131,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 42F9C9991BFAA13C00856906 /* Build configuration list for PBXProject "MellonRunker" */;
+			buildConfigurationList = 42F9C9991BFAA13C00856906 /* Build configuration list for PBXProject "SpaceMellon" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -143,7 +144,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				42F9C99D1BFAA13D00856906 /* MellonRunker */,
+				42F9C99D1BFAA13D00856906 /* SpaceMellon */,
 			);
 		};
 /* End PBXProject section */
@@ -292,8 +293,8 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = MellonRunker/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = GH.MellonRunker;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = GH.SpaceMellon;
+				PRODUCT_NAME = SpaceMellon;
 				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
@@ -306,8 +307,8 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = MellonRunker/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = GH.MellonRunker;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = GH.SpaceMellon;
+				PRODUCT_NAME = SpaceMellon;
 				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
@@ -315,7 +316,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		42F9C9991BFAA13C00856906 /* Build configuration list for PBXProject "MellonRunker" */ = {
+		42F9C9991BFAA13C00856906 /* Build configuration list for PBXProject "SpaceMellon" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				42F9C9B01BFAA13D00856906 /* Debug */,
@@ -324,7 +325,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		42F9C9B21BFAA13D00856906 /* Build configuration list for PBXNativeTarget "MellonRunker" */ = {
+		42F9C9B21BFAA13D00856906 /* Build configuration list for PBXNativeTarget "SpaceMellon" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				42F9C9B31BFAA13D00856906 /* Debug */,
