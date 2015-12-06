@@ -12,8 +12,6 @@ class Asteroid : SKSpriteNode
 {
     let asteroidNames: [String] = ["a1","a3","a4","b4","c1","c3","c4","d1","d3","d4"]
     
-    var boundaryCollisionCount = 0
-    
     // Creates a random asteroid
     init(parentFrame: CGRect)
     {
