@@ -145,7 +145,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             self.setupScoreDisplay()
             self.isSetup = true
         }
-        let bgmURL = NSBundle.mainBundle().URLForResource("menubgm", withExtension: "wav")!
+        let bgmURL = NSBundle.mainBundle().URLForResource("gamebgm", withExtension: "wav")!
         do {
             try bgmPlayer = AVAudioPlayer(contentsOfURL: bgmURL, fileTypeHint:nil)
             bgmPlayer.prepareToPlay()

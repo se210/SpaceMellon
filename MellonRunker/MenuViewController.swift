@@ -77,6 +77,10 @@ class MenuViewController: UIViewController {
         creditBox.center = CGPoint(x: CGRectGetMidX(screenBounds), y: CGRectGetMaxY(screenBounds) * 0.55)
         self.creditBox.hidden = true
         self.view.addSubview(self.creditBox)
+        
+        /* Credits
+        SpaceMellon is created by Gihyuk Ko and Se-Joon Chung as a final project for 
+        */
 
         optionBox = UIButton(frame: CGRectMake(0,0,300,300))
         optionBox.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.8)
@@ -92,6 +96,7 @@ class MenuViewController: UIViewController {
             return print("No music file")
         }
         bgmPlayer.play()
+        bgmPlayer.volume = 1
     }
     
     func play(sender: UIButton) {
@@ -102,10 +107,12 @@ class MenuViewController: UIViewController {
     func volumetoggle(sender: UIButton) {
         if (self.volume) {
             self.volumeButton.setBackgroundImage(UIImage(named: "volumeoff"), forState: UIControlState.Normal)
+            self.bgmPlayer.volume = 0
             self.volume = false
         } else {
             self.volumeButton.setBackgroundImage(UIImage(named: "volumeon"), forState: UIControlState.Normal)
             self.volume = true
+            self.bgmPlayer.volume = 1
         }
     }
     
