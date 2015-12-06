@@ -12,6 +12,7 @@ import AVFoundation
 class GameScene: SKScene, SKPhysicsContactDelegate{
     var spaceship: SKSpriteNode
     var isSetup: Bool
+    var isGameOver: Bool
     var score: Int
     var scoreLabel: SKLabelNode
     var controlpad: SKSpriteNode
@@ -44,6 +45,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         // initialize class variables
         self.score = 0
         self.isSetup = false
+        self.isGameOver = false
         self.spaceship = SKSpriteNode(imageNamed: "spaceship0")
         self.scoreLabel = SKLabelNode(fontNamed: "HelveticaNeue-Light")
         self.controller = SKSpriteNode(imageNamed: "controller_dark")
@@ -188,29 +190,36 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         let location = touch.locationInNode(self)
         
         // move controller and controlpad at location and reveal
-        self.controlpad.position = location
-        self.controller.position = location
-        self.controlpad.hidden = false
-        self.controller.hidden = false
+        if (!self.isGameOver)
+        {
+            self.controlpad.position = location
+            self.controller.position = location
+            self.controlpad.hidden = false
+            self.controller.hidden = false
+        }
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         let touch = touches.first! as UITouch
         let location = touch.locationInNode(self)
-        let padradius = self.controlpad.size.width / 3.0
-        let padlocation = self.controlpad.position
-        let difference = CGPointMake(location.x - padlocation.x, location.y - padlocation.y)
         
-        // move controller on controlpad according to its direction
-        if (vecLength(difference) > Float(padradius)) {
-            let motivation = CGPointMake(padradius * vecNormalize(difference).x,
-                                         padradius * vecNormalize(difference).y)
-            self.controller.position = CGPointMake(padlocation.x + motivation.x,
-                                                   padlocation.y + motivation.y)
-            self.moveShipByVector(difference)
-        } else {
-            self.controller.position = location
-            self.moveShipByVector(difference)
+        if (!self.isGameOver)
+        {
+            let padradius = self.controlpad.size.width / 3.0
+            let padlocation = self.controlpad.position
+            let difference = CGPointMake(location.x - padlocation.x, location.y - padlocation.y)
+            
+            // move controller on controlpad according to its direction
+            if (vecLength(difference) > Float(padradius)) {
+                let motivation = CGPointMake(padradius * vecNormalize(difference).x,
+                                             padradius * vecNormalize(difference).y)
+                self.controller.position = CGPointMake(padlocation.x + motivation.x,
+                                                       padlocation.y + motivation.y)
+                self.moveShipByVector(difference)
+            } else {
+                self.controller.position = location
+                self.moveShipByVector(difference)
+            }
         }
     }
     
@@ -267,6 +276,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             self.explosion()
             self.spaceship.physicsBody?.velocity = CGVectorMake(0,0)
             self.spaceship.position = CGRectGetCenter(self.frame)
+            self.handleGameOver()
         }
         // if asteroid hit a boundary
         else if (firstBody.categoryBitMask & asteroidCategory != 0 && secondBody.categoryBitMask & farBoundaryCategory != 0)
@@ -296,17 +306,46 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         //effectPlayer.stop()
     }
     
+    func handleGameOver()
+    {
+        self.isGameOver = true
+        self.physicsWorld.speed = 0.0
+        
+        let gameOverText = SKLabelNode(fontNamed: "HelveticaNeue-Light")
+        gameOverText.position = (self.view?.center)!
+        gameOverText.text = "Game Over!"
+        gameOverText.fontSize = 64.0
+        gameOverText.zPosition = 10.0
+        self.addChild(gameOverText)
+        
+        let tryAgainButton = UIButton()
+        tryAgainButton.frame = CGRectMake(0, 0, 100, 50)
+        tryAgainButton.center = CGPoint(x: CGRectGetMidX(self.frame), y: CGRectGetMaxY(self.frame) * 0.60)
+        tryAgainButton.setTitle("Try Again", forState: UIControlState.Normal)
+        tryAgainButton.setTitleColor(UIColor.greenColor(), forState: UIControlState.Normal)
+        tryAgainButton.addTarget(self, action: "tryAgain:", forControlEvents: UIControlEvents.TouchUpInside)
+        self.view?.addSubview(tryAgainButton)
+    }
+    
+    func tryAgain(sender:UIButton!)
+    {
+        self.removeFromParent()
+        self.removeAllActions()
+        self.removeAllChildren()
+//        self.view?.presentScene(nil)
+        NSNotificationCenter.defaultCenter().postNotificationName("TryAgain", object: self)
+//        self.viewController?.dismissViewControllerAnimated(true, completion: {() -> Void in
+//                self.viewController?.performSegueWithIdentifier("TryAgain", sender: self)
+//            })
+    }
+    
     func startAnimation(animationFrames: [SKTexture]) {
         //This is our general runAction method to make our animation start.
         //By using a withKey if this gets called while already running it will remove the first action before starting this again.
-        self.spaceship.runAction(SKAction.animateWithTextures(animationFrames, timePerFrame: 0.05, resize: false, restore: true), withKey:"animation")
-    }
-    
-    func handleContact(ball: SKSpriteNode, block: SKSpriteNode) {
-        // remove the block that the ball hit and then increase score
-        block.removeFromParent()
-        self.score++
-        self.scoreLabel.text = "Score: \(self.score)"
+        self.spaceship.runAction(SKAction.animateWithTextures(animationFrames, timePerFrame: 0.05, resize: false, restore: true), completion: {() -> Void in
+                self.spaceship.removeFromParent()
+            }
+        )
     }
     
     required init(coder aDecoder: NSCoder) {

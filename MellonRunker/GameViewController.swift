@@ -27,6 +27,8 @@ class GameViewController: UIViewController {
             let scene = GameScene(size: self.view.bounds.size)
             scene.scaleMode = .AspectFill
             
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "tryAgain:", name: "TryAgain", object: nil)
+            
             skView.presentScene(scene)
         }
     }
@@ -50,6 +52,20 @@ class GameViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Release any cached data, images, etc that aren't in use.
+    }
+    
+    deinit
+    {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    func tryAgain(notification: NSNotification)
+    {
+        let skView = self.view as! SKView
+        skView.presentScene(nil)
+        self.dismissViewControllerAnimated(true, completion: {() -> Void in
+            self.performSegueWithIdentifier("TryAgain", sender: self)
+        })
     }
 
 }

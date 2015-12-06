@@ -61,10 +61,16 @@
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </sceneKitView>
                     <navigationItem key="navigationItem" id="Y3i-d6-I3o"/>
+                    <connections>
+                        <segue destination="Gf9-7L-RZZ" kind="show" identifier="TryAgain" id="R9D-xP-xCI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="477" y="-309"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="nNl-lP-jfi"/>
+    </inferredMetricsTieBreakers>
 </document>
