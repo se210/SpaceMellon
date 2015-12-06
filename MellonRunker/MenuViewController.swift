@@ -122,6 +122,7 @@ class MenuViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         bgmPlayer.currentTime = 0
+        bgmPlayer.numberOfLoops = -1
         bgmPlayer.play()
     }
     

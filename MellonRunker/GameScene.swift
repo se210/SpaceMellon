@@ -165,6 +165,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             bgmPlayer.volume = 0
             effectPlayer.volume = 0
         }
+        bgmPlayer.numberOfLoops = -1
         bgmPlayer.play()
         effectPlayer.prepareToPlay()
 
