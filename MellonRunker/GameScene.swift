@@ -326,10 +326,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.addChild(gameOverText)
         
         let tryAgainButton = UIButton()
-        tryAgainButton.frame = CGRectMake(0, 0, 100, 50)
+        tryAgainButton.frame = CGRectMake(0,0,70,70)
+        tryAgainButton.setBackgroundImage(UIImage(named: "tryagain"), forState: UIControlState.Normal)
+        //tryAgainButton.frame = CGRectMake(0, 0, 100, 50)
         tryAgainButton.center = CGPoint(x: CGRectGetMidX(self.frame), y: CGRectGetMaxY(self.frame) * 0.60)
-        tryAgainButton.setTitle("Try Again", forState: UIControlState.Normal)
-        tryAgainButton.setTitleColor(UIColor.greenColor(), forState: UIControlState.Normal)
+        //tryAgainButton.setTitle("Try Again", forState: UIControlState.Normal)
+        //tryAgainButton.setTitleColor(UIColor.greenColor(), forState: UIControlState.Normal)
         tryAgainButton.addTarget(self, action: "tryAgain:", forControlEvents: UIControlEvents.TouchUpInside)
         self.view?.addSubview(tryAgainButton)
     }

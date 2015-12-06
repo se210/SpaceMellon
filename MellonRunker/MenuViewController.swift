@@ -15,11 +15,11 @@ class MenuViewController: UIViewController {
     //var gameTitle: UILabel!
     var playButton: UIButton!
     var volumeButton: UIButton!
-    var optionButton: UIButton!
+    //var optionButton: UIButton!
     var creditButton: UIButton!
     var quitButton: UIButton!
     var creditBox: UIButton!
-    var optionBox: UIButton!
+    //var optionBox: UIButton!
     
     var volume: Bool = true
     var credit: Bool = false
@@ -46,30 +46,32 @@ class MenuViewController: UIViewController {
         playButton = UIButton(frame: CGRectMake(0,0,150,150))
         playButton.setBackgroundImage(UIImage(named: "play"), forState: UIControlState.Normal)
         playButton.alpha = 0.8
-        playButton.center = CGPoint(x: CGRectGetMidX(screenBounds), y: CGRectGetMaxY(screenBounds) * 0.55)
+        playButton.center = CGPoint(x: CGRectGetMidX(screenBounds), y: CGRectGetMaxY(screenBounds) * 0.525)
         playButton.addTarget(self, action: "play:", forControlEvents: UIControlEvents.TouchUpInside)
         
         volumeButton = UIButton(frame: CGRectMake(0,0,50,50))
         volumeButton.setBackgroundImage(UIImage(named: "volumeon"), forState: UIControlState.Normal)
         volumeButton.alpha = 0.6
         volumeButton.addTarget(self, action: "volumetoggle:", forControlEvents: UIControlEvents.TouchUpInside)
-        volumeButton.center = CGPoint(x: CGRectGetMidX(screenBounds)*1/2, y: CGRectGetMaxY(screenBounds) * 0.85)
+        volumeButton.center = CGPoint(x: CGRectGetMidX(screenBounds)*2/3, y: CGRectGetMaxY(screenBounds) * 0.85)
         
+        /*
         optionButton = UIButton(frame: CGRectMake(0,0,50,50))
         optionButton.setBackgroundImage(UIImage(named: "option"), forState: UIControlState.Normal)
         optionButton.alpha = 0.85
         optionButton.addTarget(self, action: "option:", forControlEvents: UIControlEvents.TouchUpInside)
         optionButton.center = CGPoint(x: CGRectGetMidX(screenBounds), y: CGRectGetMaxY(screenBounds) * 0.85)
-        
+        */
+
         creditButton = UIButton(frame: CGRectMake(0,0,50,50))
         creditButton.setBackgroundImage(UIImage(named: "credit"), forState: UIControlState.Normal)
         creditButton.alpha = 0.85
         creditButton.addTarget(self, action: "credittoggle:", forControlEvents: UIControlEvents.TouchUpInside)
-        creditButton.center = CGPoint(x: CGRectGetMidX(screenBounds)*3/2, y: CGRectGetMaxY(screenBounds) * 0.85)
+        creditButton.center = CGPoint(x: CGRectGetMidX(screenBounds)*4/3, y: CGRectGetMaxY(screenBounds) * 0.85)
         
         self.view.addSubview(playButton)
         self.view.addSubview(volumeButton)
-        self.view.addSubview(optionButton)
+        //self.view.addSubview(optionButton)
         self.view.addSubview(creditButton)
         
         creditBox = UIButton(frame: CGRectMake(0,0,300,300))
@@ -79,14 +81,16 @@ class MenuViewController: UIViewController {
         self.view.addSubview(self.creditBox)
         
         /* Credits
-        SpaceMellon is created by Gihyuk Ko and Se-Joon Chung as a final project for 
+        SpaceMellon is created by Gihyuk Ko and Se-Joon Chung in Carnegie Mellon University as a final project for 98-222 Introduction to iOS Development class. We would appreciate if you had fun
         */
 
+        /*
         optionBox = UIButton(frame: CGRectMake(0,0,300,300))
         optionBox.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.8)
         optionBox.center = CGPoint(x: CGRectGetMidX(screenBounds), y: CGRectGetMaxY(screenBounds) * 0.55)
         self.optionBox.hidden = true
         self.view.addSubview(self.optionBox)
+        */
         
         let bgmURL = NSBundle.mainBundle().URLForResource("menubgm", withExtension: "wav")!
         do {
@@ -109,16 +113,12 @@ class MenuViewController: UIViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if (segue.identifier == nil)
-        {
+        if (segue.identifier == nil) {
             return
         }
-        
-        switch segue.identifier!
-        {
+        switch segue.identifier! {
         case "LoadGame":
-            if let gameViewController = segue.destinationViewController as? GameViewController
-            {
+            if let gameViewController = segue.destinationViewController as? GameViewController {
                 gameViewController.volume = self.volume;
             }
         default:
@@ -140,14 +140,14 @@ class MenuViewController: UIViewController {
     
     func option(sender: UIButton) {
         if (!self.option) {
-            self.optionBox.hidden = false
+            //self.optionBox.hidden = false
             self.option = true
             self.creditBox.hidden = true
             self.credit = false
             self.playButton.hidden = true
             
         } else {
-            self.optionBox.hidden = true
+            //self.optionBox.hidden = true
             self.option = false
             self.creditBox.hidden = true
             self.credit = false
@@ -159,13 +159,13 @@ class MenuViewController: UIViewController {
         if (!self.credit) {
             self.creditBox.hidden = false
             self.credit = true
-            self.optionBox.hidden = true
+            //self.optionBox.hidden = true
             self.option = false
             self.playButton.hidden = true
         } else {
             self.creditBox.hidden = true
             self.credit = false
-            self.optionBox.hidden = true
+            //self.optionBox.hidden = true
             self.option = false
             self.playButton.hidden = false
         }
