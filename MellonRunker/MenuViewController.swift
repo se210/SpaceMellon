@@ -19,6 +19,7 @@ class MenuViewController: UIViewController {
     var creditButton: UIButton!
     var quitButton: UIButton!
     var creditBox: UIButton!
+    var creditLabel: UILabel!
     //var optionBox: UIButton!
     
     var volume: Bool = true
@@ -74,11 +75,28 @@ class MenuViewController: UIViewController {
         //self.view.addSubview(optionButton)
         self.view.addSubview(creditButton)
         
-        creditBox = UIButton(frame: CGRectMake(0,0,300,300))
+        creditBox = UIButton(frame: CGRectMake(0,0,350,250))
         creditBox.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.8)
         creditBox.center = CGPoint(x: CGRectGetMidX(screenBounds), y: CGRectGetMaxY(screenBounds) * 0.55)
         self.creditBox.hidden = true
         self.view.addSubview(self.creditBox)
+        
+        creditLabel = UILabel(frame: CGRectMake(0,0,300,200))
+        creditLabel.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.6)
+        creditLabel.center = CGPoint(x: CGRectGetMidX(screenBounds), y: CGRectGetMaxY(screenBounds) * 0.55)
+        creditLabel.numberOfLines = 0
+        creditLabel.textColor = UIColor.whiteColor().colorWithAlphaComponent(0.8)
+        creditLabel.font = UIFont(name: "HelveticaNeue-Light", size: 11)
+        creditLabel.textAlignment = .Justified
+        let creditText: String = "SpaceMellon\n\nCreated by Gihyuk Ko and Se-Joon Chung of Carnegie Mellon University.\nMotivated from 98-222 Introduction to iOS Development class as a final project.\nMost icons and logos we have used are from opengameart.org and logomaker.com, where both sites kindly provides free-to-use icons and logos.\nHave fun!!\n\n Copyright © 2015 Gihyuk Ko and Se-Joon Chung. \n All rights reserved."
+        let mutableString = NSMutableAttributedString(string: creditText,
+                                        attributes: [NSFontAttributeName:UIFont(name: "HelveticaNeue-Light", size: 11.0)!])
+        mutableString.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: 20.0)!, range: NSRange(location:0,length:11))
+        mutableString.addAttribute(NSForegroundColorAttributeName, value: UIColor.cyanColor().colorWithAlphaComponent(0.6), range: NSRange(location:206,length:15))
+        mutableString.addAttribute(NSForegroundColorAttributeName, value: UIColor.cyanColor().colorWithAlphaComponent(0.6), range: NSRange(location:226,length:13))
+        creditLabel.attributedText = mutableString
+        self.creditLabel.hidden = true
+        self.view.addSubview(self.creditLabel)
         
         /* Credits
         SpaceMellon is created by Gihyuk Ko and Se-Joon Chung in Carnegie Mellon University as a final project for 98-222 Introduction to iOS Development class. We would appreciate if you had fun
@@ -143,7 +161,7 @@ class MenuViewController: UIViewController {
             //self.optionBox.hidden = false
             self.option = true
             self.creditBox.hidden = true
-            self.credit = false
+            self.creditLabel.hidden = true
             self.playButton.hidden = true
             
         } else {
@@ -158,12 +176,14 @@ class MenuViewController: UIViewController {
     func credittoggle(sender: UIButton) {
         if (!self.credit) {
             self.creditBox.hidden = false
+            self.creditLabel.hidden = false
             self.credit = true
             //self.optionBox.hidden = true
             self.option = false
             self.playButton.hidden = true
         } else {
             self.creditBox.hidden = true
+            self.creditLabel.hidden = true
             self.credit = false
             //self.optionBox.hidden = true
             self.option = false
