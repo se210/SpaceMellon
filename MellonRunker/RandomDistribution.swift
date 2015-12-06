@@ -1,6 +1,6 @@
 //
 //  RandomDistribution.swift
-//  MellonRunker
+//  SpaceMellon
 //
 //  Created by Se-Joon Chung on 12/5/15.
 //  Copyright © 2015 Gihyuk Ko. All rights reserved.

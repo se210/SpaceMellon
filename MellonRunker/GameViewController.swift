@@ -1,6 +1,6 @@
 //
 //  GameViewController.swift
-//  MellonRunker
+//  SpaceMellon
 //
 //  Created by Gihyuk Ko on 11/16/15.
 //  Copyright © 2015 Gihyuk Ko and Se-Joon Chung. All rights reserved.

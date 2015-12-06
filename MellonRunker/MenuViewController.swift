@@ -1,6 +1,6 @@
 //
 //  MenuViewController.swift
-//  MellonRunker
+//  SpaceMellon
 //
 //  Created by Gihyuk Ko on 12/5/15.
 //  Copyright © 2015 Gihyuk Ko and Se-Joon Chung. All rights reserved.
@@ -98,10 +98,6 @@ class MenuViewController: UIViewController {
         self.creditLabel.hidden = true
         self.view.addSubview(self.creditLabel)
         
-        /* Credits
-        SpaceMellon is created by Gihyuk Ko and Se-Joon Chung in Carnegie Mellon University as a final project for 98-222 Introduction to iOS Development class. We would appreciate if you had fun
-        */
-
         /*
         optionBox = UIButton(frame: CGRectMake(0,0,300,300))
         optionBox.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.8)
