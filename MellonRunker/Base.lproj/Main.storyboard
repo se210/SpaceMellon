@@ -8,7 +8,7 @@
         <!--Splash View Controller-->
         <scene sceneID="0qj-bH-Pzz">
             <objects>
-                <viewController id="8Sd-40-u3v" customClass="SplashViewController" customModule="MellonRunker" sceneMemberID="viewController">
+                <viewController id="8Sd-40-u3v" customClass="SplashViewController" customModule="SpaceMellon" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="EV4-Wg-Nmb"/>
                         <viewControllerLayoutGuide type="bottom" id="HOP-ym-Mhy"/>
@@ -30,7 +30,7 @@
         <!--Menu View Controller-->
         <scene sceneID="ku4-i4-e6O">
             <objects>
-                <viewController id="Gf9-7L-RZZ" customClass="MenuViewController" customModule="MellonRunker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Gf9-7L-RZZ" customClass="MenuViewController" customModule="SpaceMellon" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="CcG-wm-eCI"/>
                         <viewControllerLayoutGuide type="bottom" id="H0i-eK-GGy"/>
@@ -53,7 +53,7 @@
         <!--Game View Controller-->
         <scene sceneID="tXr-a1-R10">
             <objects>
-                <viewController id="BV1-FR-VrT" customClass="GameViewController" customModule="MellonRunker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BV1-FR-VrT" customClass="GameViewController" customModule="SpaceMellon" customModuleProvider="target" sceneMemberID="viewController">
                     <sceneKitView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="3se-qz-xqx" customClass="SKView">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -71,6 +71,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="nNl-lP-jfi"/>
+        <segue reference="R9D-xP-xCI"/>
     </inferredMetricsTieBreakers>
 </document>
