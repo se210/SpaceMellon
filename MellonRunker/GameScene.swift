@@ -18,6 +18,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     var controlpad: SKSpriteNode
     var controller: SKSpriteNode
     
+    var timer: NSTimer?
+    
     var volume: Bool!
     var bgmPlayer = AVAudioPlayer()
     var effectPlayer = AVAudioPlayer()
@@ -144,7 +146,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     
     override func didMoveToView(view: SKView) {
         if (!isSetup) { // when the game is not setup
-            let timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("generateAsteroids"), userInfo: nil, repeats: true)
+            timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("generateAsteroids"), userInfo: nil, repeats: true)
             self.setupScoreDisplay()
             self.isSetup = true
         }
@@ -278,10 +280,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         // if spaceship and asteroid collided
         if (firstBody.categoryBitMask & asteroidCategory != 0 && secondBody.categoryBitMask & spaceshipCategory != 0) {
             // reset spaceship
-            self.explosion()
-            self.spaceship.physicsBody?.velocity = CGVectorMake(0,0)
-            self.spaceship.position = CGRectGetCenter(self.frame)
             self.handleGameOver()
+            self.explosion()
         }
         // if asteroid hit a boundary
         else if (firstBody.categoryBitMask & asteroidCategory != 0 && secondBody.categoryBitMask & farBoundaryCategory != 0)
@@ -308,8 +308,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.spaceship.texture = firstFrame
         bgmPlayer.stop()
         effectPlayer.play()
-        startAnimation(explosionFrames)
-        //effectPlayer.stop()
+        startExplosion(explosionFrames)
     }
     
     // handle game over
@@ -317,7 +316,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     {
         self.isGameOver = true
         self.physicsWorld.speed = 0.0
-        
+        timer?.invalidate()
+        timer = nil
+    }
+    
+    func showGameOverMenu()
+    {
         let gameOverText = SKLabelNode(fontNamed: "HelveticaNeue-Light")
         gameOverText.position = (self.view?.center)!
         gameOverText.text = "Game Over!"
@@ -328,10 +332,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         let tryAgainButton = UIButton()
         tryAgainButton.frame = CGRectMake(0,0,70,70)
         tryAgainButton.setBackgroundImage(UIImage(named: "tryagain"), forState: UIControlState.Normal)
-        //tryAgainButton.frame = CGRectMake(0, 0, 100, 50)
         tryAgainButton.center = CGPoint(x: CGRectGetMidX(self.frame), y: CGRectGetMaxY(self.frame) * 0.60)
-        //tryAgainButton.setTitle("Try Again", forState: UIControlState.Normal)
-        //tryAgainButton.setTitleColor(UIColor.greenColor(), forState: UIControlState.Normal)
         tryAgainButton.addTarget(self, action: "tryAgain:", forControlEvents: UIControlEvents.TouchUpInside)
         self.view?.addSubview(tryAgainButton)
     }
@@ -341,18 +342,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.removeFromParent()
         self.removeAllActions()
         self.removeAllChildren()
-//        self.view?.presentScene(nil)
+        self.physicsWorld.contactDelegate = nil
         NSNotificationCenter.defaultCenter().postNotificationName("TryAgain", object: self)
-//        self.viewController?.dismissViewControllerAnimated(true, completion: {() -> Void in
-//                self.viewController?.performSegueWithIdentifier("TryAgain", sender: self)
-//            })
     }
     
-    func startAnimation(animationFrames: [SKTexture]) {
+    func startExplosion(explosionFrames: [SKTexture]) {
         //This is our general runAction method to make our animation start.
         //By using a withKey if this gets called while already running it will remove the first action before starting this again.
-        self.spaceship.runAction(SKAction.animateWithTextures(animationFrames, timePerFrame: 0.05, resize: false, restore: true), completion: {() -> Void in
+        self.spaceship.runAction(SKAction.animateWithTextures(explosionFrames, timePerFrame: 0.05, resize: false, restore: true), completion: {() -> Void in
                 self.spaceship.removeFromParent()
+                self.showGameOverMenu()
             }
         )
     }

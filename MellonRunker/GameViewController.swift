@@ -17,23 +17,8 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let skView = self.view as! SKView
         
-        if(skView.scene == nil)
-        {
-            skView.showsFPS = false
-            skView.showsNodeCount = false
-            skView.ignoresSiblingOrder = true
-            skView.showsPhysics = true
-            
-            let scene = GameScene(size: self.view.bounds.size)
-            scene.scaleMode = .AspectFill
-            scene.volume = self.volume
-            
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "tryAgain:", name: "TryAgain", object: nil)
-            
-            skView.presentScene(scene)
-        }
+        loadGameScene()
     }
     
     override func shouldAutorotate() -> Bool {
@@ -60,6 +45,27 @@ class GameViewController: UIViewController {
     deinit
     {
         NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    func loadGameScene()
+    {
+        let skView = self.view as! SKView
+        
+        if(skView.scene == nil)
+        {
+            skView.showsFPS = false
+            skView.showsNodeCount = false
+            skView.ignoresSiblingOrder = true
+            skView.showsNodeCount = true
+            
+            let scene = GameScene(size: self.view.bounds.size)
+            scene.scaleMode = .AspectFill
+            scene.volume = self.volume
+            
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "tryAgain:", name: "TryAgain", object: nil)
+            
+            skView.presentScene(scene)
+        }
     }
     
     func tryAgain(notification: NSNotification)
