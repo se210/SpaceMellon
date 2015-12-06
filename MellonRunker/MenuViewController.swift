@@ -95,7 +95,6 @@ class MenuViewController: UIViewController {
         } catch {
             return print("No music file")
         }
-        bgmPlayer.play()
         bgmPlayer.volume = 1
     }
     
