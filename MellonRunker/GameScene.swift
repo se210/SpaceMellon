@@ -6,18 +6,19 @@
 //  Copyright © 2015 Gihyuk Ko and Se-Joon Chung. All rights reserved.
 //
 
-// Simply copied from Sally's brickbreaker
-
 import SpriteKit
+import AVFoundation
 
 class GameScene: SKScene, SKPhysicsContactDelegate{
     var spaceship: SKSpriteNode
     var isSetup: Bool
     var score: Int
     var scoreLabel: SKLabelNode
-    
     var controlpad: SKSpriteNode
     var controller: SKSpriteNode
+    
+    var bgmPlayer = AVAudioPlayer()
+    var effectPlayer = AVAudioPlayer()
     
     let kScoreHeight: CGFloat = 44.0
     
@@ -126,7 +127,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.addChild(rightBoundary)
         self.addChild(ceilingBoundary)
         self.addChild(floorBoundary)
-        
+
         let farBoundarySize = CGSize(width: screenRect.width+200, height: screenRect.height+200)
         let farBoundaryOrigin = CGPoint(x: screenRect.midX-farBoundarySize.width/2.0, y: screenRect.midY-farBoundarySize.height/2.0)
         let farBoundaryRect = CGRect(origin: farBoundaryOrigin, size: farBoundarySize)
@@ -140,9 +141,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     
     override func didMoveToView(view: SKView) {
         if (!isSetup) { // when the game is not setup
-            var timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("generateAsteroids"), userInfo: nil, repeats: true)
+            let timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("generateAsteroids"), userInfo: nil, repeats: true)
             self.setupScoreDisplay()
             self.isSetup = true
+        }
+        let bgmURL = NSBundle.mainBundle().URLForResource("menubgm", withExtension: "wav")!
+        do {
+            try bgmPlayer = AVAudioPlayer(contentsOfURL: bgmURL, fileTypeHint:nil)
+        } catch {
+            return print("No music file")
         }
     }
     
@@ -273,8 +280,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         }
         let firstFrame = explosionFrames[0]
         self.spaceship.texture = firstFrame
+        let effectURL = NSBundle.mainBundle().URLForResource("explosion", withExtension: "wav")!
+        do {
+            try effectPlayer = AVAudioPlayer(contentsOfURL: effectURL, fileTypeHint:nil)
+        } catch {
+            return print("No music file")
+        }
         startAnimation(explosionFrames)
-        
     }
     
     func startAnimation(animationFrames: [SKTexture]) {
