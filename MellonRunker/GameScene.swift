@@ -1,6 +1,6 @@
 //
 //  GameScene.swift
-//  MellonRunker
+//  SpaceMellon
 //
 //  Created by Gihyuk Ko on 11/23/15.
 //  Copyright © 2015 Gihyuk Ko and Se-Joon Chung. All rights reserved.
@@ -150,6 +150,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             self.setupScoreDisplay()
             self.isSetup = true
         }
+        // load background music
         let bgmURL = NSBundle.mainBundle().URLForResource("gamebgm", withExtension: "wav")!
         do {
             try bgmPlayer = AVAudioPlayer(contentsOfURL: bgmURL, fileTypeHint:nil)
@@ -157,21 +158,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         } catch {
             return print("No music file")
         }
+        // load explosion effect music
         let effectURL = NSBundle.mainBundle().URLForResource("explosion", withExtension: "wav")!
         do {
             try effectPlayer = AVAudioPlayer(contentsOfURL: effectURL, fileTypeHint:nil)
         } catch {
             return print("No music file")
         }
+        // set volume to 0 if muted
         if (!self.volume) {
             bgmPlayer.volume = 0
             effectPlayer.volume = 0
         }
+        bgmPlayer.numberOfLoops = -1    // play music forever
         bgmPlayer.play()
         effectPlayer.prepareToPlay()
 
     }
     
+    // display score
     func setupScoreDisplay() {
         self.scoreLabel.name = "scoreLabel"
         self.scoreLabel.fontColor = SKColor.whiteColor()
@@ -183,7 +188,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.addChild(self.scoreLabel)
     }
     
-    // generate
+    // generate astroids
     func generateAsteroids() {
         for _ in 1...4
         {
@@ -192,6 +197,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             addChild(asteroid)
         }
     }
+    
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         let touch = touches.first! as UITouch
         let location = touch.locationInNode(self)
@@ -261,7 +267,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     }
     
     override func update(currentTime: CFTimeInterval) {
-        // check if the player lost the game
+        // do nothing
     }
     
     // called whenever the contact happened: method from SKPhysicsContactDelegate
@@ -283,6 +289,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             self.handleGameOver()
             self.explosion()
         }
+            
         // if asteroid hit a boundary
         else if (firstBody.categoryBitMask & asteroidCategory != 0 && secondBody.categoryBitMask & farBoundaryCategory != 0)
         {
@@ -295,7 +302,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         }
     }
     
-    // explosion
+    // explosion animation and sound effect
     func explosion() {
         let explosionAtlas = SKTextureAtlas(named: "Explosion")
         var explosionFrames = [SKTexture]()
