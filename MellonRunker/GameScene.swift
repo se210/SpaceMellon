@@ -6,6 +6,11 @@
 //  Copyright © 2015 Gihyuk Ko and Se-Joon Chung. All rights reserved.
 //
 
+/*
+Some portion of codes are cited from BrickBreaker app, made by Sally McNichols as a 2014 CMU iOS Development class.
+Copyrights for certain portion belong to Sally McNichols and 2014 CMU iOS Development Class, cited as 'cited from BrickBreaker/[filename]'
+*/
+
 import SpriteKit
 import AVFoundation
 
@@ -26,20 +31,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     
     let kScoreHeight: CGFloat = 44.0
     
+    // cited from BrickBreaker/GameScene.swift
     func vecMult(a: CGPoint, b: Float) -> CGPoint {
         return CGPointMake(a.x * CGFloat(b), a.y * CGFloat(b))
     }
     
+    // cited from BrickBreaker/GameScene.swift
     func vecLength(a: CGPoint) -> Float {
         return sqrtf(Float(a.x * a.x + a.y * a.y))
     }
     
     // Makes a vector have a length of 1
+    // cited from BrickBreaker/GameScene.swift
     func vecNormalize(a: CGPoint) -> CGPoint {
         let length: CGFloat = CGFloat(vecLength(a))
         return CGPointMake(a.x / length, a.y / length);
     }
     
+    // cited from BrickBreaker/GameScene.swift
     func CGRectGetCenter(rect: CGRect) -> CGPoint {
         return CGPointMake(CGRectGetMidX(rect), CGRectGetMidY(rect));
     }
@@ -90,8 +99,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.addChild(self.controller)
         self.addChild(self.controlpad)
         
-        
         // initialize the walls and ceiling
+        // partially cited from BrickBreaker/GameScene.swift
         let screenRect = self.frame
         let wallSize = CGSizeMake(1,CGRectGetHeight(screenRect))
         let ceilingSize = CGSizeMake(CGRectGetWidth(screenRect),1)
@@ -177,6 +186,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     }
     
     // display score
+    // cited from BrickBreaker/GameScene.swift
     func setupScoreDisplay() {
         self.scoreLabel.name = "scoreLabel"
         self.scoreLabel.fontColor = SKColor.whiteColor()
@@ -272,6 +282,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     }
     
     // called whenever the contact happened: method from SKPhysicsContactDelegate
+    // partially cited from BrickBreaker/GameScene.swift
     func didBeginContact(contact: SKPhysicsContact) {
         var firstBody: SKPhysicsBody
         var secondBody: SKPhysicsBody
@@ -328,6 +339,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         timer = nil
     }
     
+    // show gameover menu
     func showGameOverMenu()
     {
         let gameOverText = SKLabelNode(fontNamed: "HelveticaNeue-Light")
@@ -345,6 +357,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.view?.addSubview(tryAgainButton)
     }
     
+    // try again when user clicks try again button
     func tryAgain(sender:UIButton!)
     {
         self.removeFromParent()
@@ -354,9 +367,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         NSNotificationCenter.defaultCenter().postNotificationName("TryAgain", object: self)
     }
     
+    // animation for explosion
     func startExplosion(explosionFrames: [SKTexture]) {
-        //This is our general runAction method to make our animation start.
-        //By using a withKey if this gets called while already running it will remove the first action before starting this again.
+        // This is our general runAction method to make our animation start.
+        // By using a withKey if this gets called while already running it will remove the first action before starting this again.
         self.spaceship.runAction(SKAction.animateWithTextures(explosionFrames, timePerFrame: 0.05, resize: false, restore: true), completion: {() -> Void in
                 self.spaceship.removeFromParent()
                 self.showGameOverMenu()

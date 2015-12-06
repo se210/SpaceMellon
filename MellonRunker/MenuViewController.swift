@@ -12,7 +12,6 @@ import AVFoundation
 // Menu View Controller Class
 class MenuViewController: UIViewController {
     
-    //var gameTitle: UILabel!
     var playButton: UIButton!
     var volumeButton: UIButton!
     //var optionButton: UIButton!
