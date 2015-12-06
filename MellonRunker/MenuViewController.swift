@@ -104,6 +104,24 @@ class MenuViewController: UIViewController {
         performSegueWithIdentifier("LoadGame", sender: self)
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == nil)
+        {
+            return
+        }
+        
+        switch segue.identifier!
+        {
+        case "LoadGame":
+            if let gameViewController = segue.destinationViewController as? GameViewController
+            {
+                gameViewController.volume = self.volume;
+            }
+        default:
+            break
+        }
+    }
+    
     func volumetoggle(sender: UIButton) {
         if (self.volume) {
             self.volumeButton.setBackgroundImage(UIImage(named: "volumeoff"), forState: UIControlState.Normal)

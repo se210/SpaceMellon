@@ -12,6 +12,8 @@ import SceneKit
 import SpriteKit
 
 class GameViewController: UIViewController {
+    
+    var volume: Bool!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +28,7 @@ class GameViewController: UIViewController {
             
             let scene = GameScene(size: self.view.bounds.size)
             scene.scaleMode = .AspectFill
+            scene.volume = self.volume
             
             NSNotificationCenter.defaultCenter().addObserver(self, selector: "tryAgain:", name: "TryAgain", object: nil)
             

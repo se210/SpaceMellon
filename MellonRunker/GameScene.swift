@@ -18,6 +18,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     var controlpad: SKSpriteNode
     var controller: SKSpriteNode
     
+    var volume: Bool!
     var bgmPlayer = AVAudioPlayer()
     var effectPlayer = AVAudioPlayer()
     
@@ -154,13 +155,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         } catch {
             return print("No music file")
         }
-        bgmPlayer.play()
         let effectURL = NSBundle.mainBundle().URLForResource("explosion", withExtension: "wav")!
         do {
             try effectPlayer = AVAudioPlayer(contentsOfURL: effectURL, fileTypeHint:nil)
         } catch {
             return print("No music file")
         }
+        if (!self.volume) {
+            bgmPlayer.volume = 0
+            effectPlayer.volume = 0
+        }
+        bgmPlayer.play()
         effectPlayer.prepareToPlay()
 
     }
@@ -290,6 +295,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         }
     }
     
+    // explosion
     func explosion() {
         let explosionAtlas = SKTextureAtlas(named: "Explosion")
         var explosionFrames = [SKTexture]()
@@ -306,6 +312,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         //effectPlayer.stop()
     }
     
+    // handle game over
     func handleGameOver()
     {
         self.isGameOver = true
