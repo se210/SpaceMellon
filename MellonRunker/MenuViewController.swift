@@ -99,6 +99,11 @@ class MenuViewController: UIViewController {
         bgmPlayer.volume = 1
     }
     
+    override func viewDidAppear(animated: Bool) {
+        bgmPlayer.currentTime = 0
+        bgmPlayer.play()
+    }
+    
     func play(sender: UIButton) {
         bgmPlayer.stop()
         performSegueWithIdentifier("LoadGame", sender: self)
