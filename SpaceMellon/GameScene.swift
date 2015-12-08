@@ -7,7 +7,7 @@
 //
 
 /*
-Some portion of codes are cited from BrickBreaker app, made by Sally McNichols as a 2014 CMU iOS Development class.
+Some portion of codes are cited from BrickBreaker app, made by Sally McNichols as a part of 2014 CMU iOS Development class.
 Copyrights for certain portion belong to Sally McNichols and 2014 CMU iOS Development Class, cited as 'cited from BrickBreaker/[filename]'
 */
 
@@ -199,7 +199,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.addChild(self.scoreLabel)
     }
     
-    // generate astroids
+    // generate asteroids
     func generateAsteroids() {
         for _ in 1...4
         {
