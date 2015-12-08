@@ -91,8 +91,7 @@
 				42F9C9AF1BFAA13D00856906 /* Info.plist */,
 				42C025C41C12FE8E004BB263 /* MenuViewController.swift */,
 			);
-			name = SpaceMellon;
-			path = MellonRunker;
+			path = SpaceMellon;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -291,7 +290,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = MellonRunker/Info.plist;
+				INFOPLIST_FILE = SpaceMellon/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = GH.SpaceMellon;
 				PRODUCT_NAME = SpaceMellon;
@@ -305,7 +304,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = MellonRunker/Info.plist;
+				INFOPLIST_FILE = SpaceMellon/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = GH.SpaceMellon;
 				PRODUCT_NAME = SpaceMellon;
